@@ -1,6 +1,10 @@
 import type { Metadata } from "next"
 import { Navbar } from "@/components/landing/navbar"
 import { Hero } from "@/components/landing/hero"
+import { Features } from "@/components/landing/features"
+import { Pricing } from "@/components/landing/pricing"
+import { Testimonials } from "@/components/landing/testimonials"
+import { CTA } from "@/components/landing/cta"
 
 export const metadata: Metadata = {
   title: "YouTube Thumbnail Factory - AI-Powered Thumbnails in Seconds",
@@ -22,9 +26,16 @@ export default function LandingPage() {
     <main className="min-h-screen bg-background">
       <Navbar />
       <Hero />
-      <div id="features" className="py-24" />
-      <div id="pricing" className="py-24" />
-      <div id="testimonials" className="py-24" />
+      <Features />
+      <Pricing />
+      <Testimonials />
+      <CTA />
+      <footer className="py-8 text-center text-sm text-muted-foreground border-t">
+        <p>
+          &copy; {new Date().getFullYear()} YouTube Thumbnail Factory. All
+          rights reserved.
+        </p>
+      </footer>
     </main>
   )
 }
