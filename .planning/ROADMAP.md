@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation & Auth** - Secure authentication, onboarding, and UI foundation
 - [x] **Phase 2: Portraits** - Portrait library management
 - [x] **Phase 3: Generation & Gallery** - Core thumbnail generation and results display
-- [ ] **Phase 4: Billing & Settings** - Stripe subscriptions and user settings
+- [x] **Phase 4: Billing & Settings** - Stripe subscriptions and user settings
 - [ ] **Phase 5: Landing Page** - Marketing page for user acquisition
 
 ## Phase Details
@@ -85,9 +85,9 @@ Plans:
 **Plans**: 3 plans in 3 waves
 
 Plans:
-- [ ] 04-01-PLAN.md — Billing infrastructure (Stripe SDK, database schema, plan configuration)
-- [ ] 04-02-PLAN.md — Webhook and quota enforcement (Stripe webhook, checkout/portal actions, billing period quota)
-- [ ] 04-03-PLAN.md — Settings page UI (profile form, plan display, subscription management)
+- [x] 04-01-PLAN.md — Billing infrastructure (Stripe SDK, database schema, plan configuration)
+- [x] 04-02-PLAN.md — Webhook and quota enforcement (Stripe webhook, checkout/portal actions, billing period quota)
+- [x] 04-03-PLAN.md — Settings page UI (profile form, plan display, subscription management)
 
 ### Phase 5: Landing Page
 **Goal**: Public landing page converts visitors into signups
@@ -112,7 +112,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 1. Foundation & Auth | 4/4 | Complete | 2026-02-03 |
 | 2. Portraits | 2/2 | Complete | 2026-02-03 |
 | 3. Generation & Gallery | 4/4 | Complete | 2026-02-03 |
-| 4. Billing & Settings | 0/3 | Planned | - |
+| 4. Billing & Settings | 3/3 | Complete | 2026-02-03 |
 | 5. Landing Page | 0/1 | Not started | - |
 
 ---
