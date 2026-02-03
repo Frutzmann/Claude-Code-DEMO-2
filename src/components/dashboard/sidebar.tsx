@@ -44,7 +44,7 @@ const navItems = [
     name: "Settings",
     href: "/settings",
     icon: Settings,
-    disabled: true,
+    disabled: false,
   },
 ]
 
