@@ -26,13 +26,13 @@ const navItems = [
     name: "Generate",
     href: "/generate",
     icon: Sparkles,
-    disabled: true,
+    disabled: false,
   },
   {
     name: "Gallery",
     href: "/gallery",
     icon: ImageIcon,
-    disabled: true,
+    disabled: false,
   },
   {
     name: "Portraits",
