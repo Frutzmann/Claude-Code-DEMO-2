@@ -21,8 +21,10 @@ const relevantEvents = new Set([
 ])
 
 export async function POST(request: NextRequest) {
+  console.log('[Stripe Webhook] ===== REQUEST RECEIVED =====')
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')
+  console.log('[Stripe Webhook] Signature present:', !!signature)
 
   if (!signature) {
     return NextResponse.json({ error: 'No signature' }, { status: 400 })
@@ -42,8 +44,11 @@ export async function POST(request: NextRequest) {
   }
 
   if (!relevantEvents.has(event.type)) {
+    console.log('[Stripe Webhook] Skipping event:', event.type)
     return NextResponse.json({ received: true })
   }
+
+  console.log('[Stripe Webhook] Processing event:', event.type)
 
   try {
     switch (event.type) {
@@ -61,8 +66,14 @@ export async function POST(request: NextRequest) {
         const session = event.data.object as Stripe.Checkout.Session
         if (session.mode === 'subscription' && session.subscription) {
           const subscription = await stripe.subscriptions.retrieve(
-            session.subscription as string
+            session.subscription as string,
+            { expand: ['items.data.price.product'] }
           )
+          // Ensure product and price exist before creating subscription
+          const price = subscription.items.data[0].price
+          const product = price.product as Stripe.Product
+          await upsertProduct(product)
+          await upsertPrice(price)
           await upsertSubscription(subscription)
         }
         break
@@ -123,9 +134,15 @@ async function upsertPrice(price: Stripe.Price) {
 }
 
 async function upsertSubscription(subscription: Stripe.Subscription) {
+  console.log('[Stripe Webhook] Upserting subscription:', subscription.id)
+  console.log('[Stripe Webhook] Subscription metadata:', subscription.metadata)
+  console.log('[Stripe Webhook] Customer ID:', subscription.customer)
+
   // Get user ID from subscription metadata or customer lookup
   const userId = subscription.metadata.supabase_user_id
     || await getUserIdFromCustomer(subscription.customer as string)
+
+  console.log('[Stripe Webhook] Resolved user ID:', userId)
 
   if (!userId) {
     console.error('No user ID found for subscription:', subscription.id)
@@ -169,6 +186,8 @@ async function upsertSubscription(subscription: Stripe.Subscription) {
     console.error('Failed to upsert subscription:', error)
     throw error
   }
+
+  console.log('[Stripe Webhook] Subscription upserted successfully for user:', userId)
 }
 
 async function deleteSubscription(subscription: Stripe.Subscription) {
