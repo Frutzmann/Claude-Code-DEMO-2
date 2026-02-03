@@ -29,6 +29,15 @@ export async function middleware(request: NextRequest) {
     return supabaseResponse
   }
 
+  // Redirect from home page
+  if (pathname === "/") {
+    if (user) {
+      return NextResponse.redirect(new URL("/dashboard", request.url))
+    } else {
+      return NextResponse.redirect(new URL("/login", request.url))
+    }
+  }
+
   // Require auth for protected routes
   if (!user) {
     const redirectUrl = new URL("/login", request.url)
