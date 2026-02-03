@@ -30,13 +30,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. User can reset forgotten password via email link
   4. New user is forced through onboarding flow before accessing main app
   5. App displays consistent dark theme with loading states and error messages
-**Plans**: TBD
+**Plans**: 4 plans in 3 waves
 
 Plans:
-- [ ] 01-01: Supabase setup and auth configuration
-- [ ] 01-02: Auth pages and session middleware
-- [ ] 01-03: Onboarding flow with portrait upload
-- [ ] 01-04: UI foundation and theme setup
+- [ ] 01-01-PLAN.md — Project & UI foundation (Next.js, Tailwind, shadcn/ui, dark theme)
+- [ ] 01-02-PLAN.md — Supabase backend setup (clients, schema, storage, admin utility)
+- [ ] 01-03-PLAN.md — Auth pages & middleware (login, signup, password reset, route protection)
+- [ ] 01-04-PLAN.md — Onboarding flow (portrait upload, welcome tutorial, dashboard shell)
 
 ### Phase 2: Portraits
 **Goal**: Users can manage a library of portrait images for use in thumbnail generation
@@ -107,7 +107,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Auth | 0/4 | Not started | - |
+| 1. Foundation & Auth | 0/4 | Planned | - |
 | 2. Portraits | 0/1 | Not started | - |
 | 3. Generation & Gallery | 0/3 | Not started | - |
 | 4. Billing & Settings | 0/3 | Not started | - |
