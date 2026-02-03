@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-03)
 ## Current Position
 
 Phase: 4 of 5 (Billing & Settings)
-Plan: 0 of 3 in current phase
-Status: Ready to plan
-Last activity: 2026-02-03 — Phase 3 verified and complete
+Plan: 1 of 3 in current phase
+Status: In progress
+Last activity: 2026-02-03 — Completed 04-01-PLAN.md
 
-Progress: [██████░░░░] 60%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 10
+- Total plans completed: 11
 - Average duration: 3.5 min
-- Total execution time: 35 min
+- Total execution time: 39 min
 
 **By Phase:**
 
@@ -30,9 +30,10 @@ Progress: [██████░░░░] 60%
 | 1 | 4 | 19 min | 4.75 min |
 | 2 | 2 | 4 min | 2 min |
 | 3 | 4 | 12 min | 3 min |
+| 4 | 1 | 4 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-02 (2m), 03-01 (2m), 03-02 (3m), 03-03 (3m), 03-04 (4m)
+- Last 5 plans: 03-01 (2m), 03-02 (3m), 03-03 (3m), 03-04 (4m), 04-01 (4m)
 - Trend: Steady
 
 *Updated after each plan completion*
@@ -67,6 +68,9 @@ Recent decisions affecting current work:
 - Supabase Realtime useRef pattern for stable callbacks in subscriptions
 - JSZip + file-saver for batch thumbnail downloads
 - date-fns for relative time formatting in gallery
+- Billing enums (pricing_type, pricing_plan_interval, subscription_status) for type safety
+- Customers table service-role-only (no user RLS)
+- Plan quotas: free (5), pro (50), agency (200) generations/month
 
 ### Pending Todos
 
@@ -76,6 +80,13 @@ Recent decisions affecting current work:
 - Create 'thumbnails' storage bucket (public)
 - Set N8N_WEBHOOK_URL environment variable
 - Set SUPABASE_SERVICE_ROLE_KEY environment variable
+- Run 006_billing.sql in Supabase SQL Editor
+- Set STRIPE_SECRET_KEY environment variable
+- Set STRIPE_WEBHOOK_SECRET environment variable
+- Set STRIPE_PRICE_PRO environment variable
+- Set STRIPE_PRICE_AGENCY environment variable
+- Create Pro product ($19/month) in Stripe Dashboard
+- Create Agency product ($49/month) in Stripe Dashboard
 
 ### Blockers/Concerns
 
@@ -83,9 +94,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-03T13:15:00Z
-Stopped at: Phase 3 verified and complete
+Last session: 2026-02-03T14:04:00Z
+Stopped at: Completed 04-01-PLAN.md
 Resume file: None
 
 ---
-*Next step: Run `/gsd:discuss-phase 4` or `/gsd:plan-phase 4` to plan Billing & Settings*
+*Next step: Execute 04-02-PLAN.md (Stripe webhooks)*
