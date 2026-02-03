@@ -38,7 +38,7 @@ const navItems = [
     name: "Portraits",
     href: "/portraits",
     icon: User,
-    disabled: true,
+    disabled: false,
   },
   {
     name: "Settings",
