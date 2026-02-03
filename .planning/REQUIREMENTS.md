@@ -9,17 +9,17 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Authentication
 
-- [ ] **AUTH-01**: User can create account with email and password
-- [ ] **AUTH-02**: User receives email verification after signup
-- [ ] **AUTH-03**: User can reset password via email link
-- [ ] **AUTH-04**: User session persists across browser refresh
-- [ ] **AUTH-05**: Unauthenticated users are redirected to login page
+- [x] **AUTH-01**: User can create account with email and password
+- [x] **AUTH-02**: User receives email verification after signup
+- [x] **AUTH-03**: User can reset password via email link
+- [x] **AUTH-04**: User session persists across browser refresh
+- [x] **AUTH-05**: Unauthenticated users are redirected to login page
 
 ### Onboarding
 
-- [ ] **ONBD-01**: User must upload first portrait before accessing main app
-- [ ] **ONBD-02**: User sees welcome tutorial explaining the generation workflow
-- [ ] **ONBD-03**: User is redirected to dashboard after completing onboarding
+- [x] **ONBD-01**: User must upload first portrait before accessing main app
+- [x] **ONBD-02**: User sees welcome tutorial explaining the generation workflow
+- [x] **ONBD-03**: User is redirected to dashboard after completing onboarding
 
 ### Portraits
 
@@ -75,18 +75,18 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Admin
 
-- [ ] **ADMN-01**: Admin user is identified by ADMIN_EMAIL environment variable
+- [x] **ADMN-01**: Admin user is identified by ADMIN_EMAIL environment variable
 - [ ] **ADMN-02**: Admin user has unlimited generations (no quota check)
 - [ ] **ADMN-03**: Admin user sees "Admin — Unlimited" badge instead of quota display
 - [ ] **ADMN-04**: Admin user does not see upgrade CTAs
 
 ### UI/UX
 
-- [ ] **UIUX-01**: App uses modern dark theme with glass effects and subtle gradients
-- [ ] **UIUX-02**: All forms show loading states during submission
-- [ ] **UIUX-03**: All pages show appropriate empty states
-- [ ] **UIUX-04**: Errors are displayed clearly with actionable messages
-- [ ] **UIUX-05**: App is responsive across desktop and tablet sizes
+- [x] **UIUX-01**: App uses modern dark theme with glass effects and subtle gradients
+- [x] **UIUX-02**: All forms show loading states during submission
+- [x] **UIUX-03**: All pages show appropriate empty states
+- [x] **UIUX-04**: Errors are displayed clearly with actionable messages
+- [x] **UIUX-05**: App is responsive across desktop and tablet sizes
 
 ## v2 Requirements
 
@@ -134,20 +134,20 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 1 | Pending |
-| AUTH-02 | Phase 1 | Pending |
-| AUTH-03 | Phase 1 | Pending |
-| AUTH-04 | Phase 1 | Pending |
-| AUTH-05 | Phase 1 | Pending |
-| ONBD-01 | Phase 1 | Pending |
-| ONBD-02 | Phase 1 | Pending |
-| ONBD-03 | Phase 1 | Pending |
-| ADMN-01 | Phase 1 | Pending |
-| UIUX-01 | Phase 1 | Pending |
-| UIUX-02 | Phase 1 | Pending |
-| UIUX-03 | Phase 1 | Pending |
-| UIUX-04 | Phase 1 | Pending |
-| UIUX-05 | Phase 1 | Pending |
+| AUTH-01 | Phase 1 | Complete |
+| AUTH-02 | Phase 1 | Complete |
+| AUTH-03 | Phase 1 | Complete |
+| AUTH-04 | Phase 1 | Complete |
+| AUTH-05 | Phase 1 | Complete |
+| ONBD-01 | Phase 1 | Complete |
+| ONBD-02 | Phase 1 | Complete |
+| ONBD-03 | Phase 1 | Complete |
+| ADMN-01 | Phase 1 | Complete |
+| UIUX-01 | Phase 1 | Complete |
+| UIUX-02 | Phase 1 | Complete |
+| UIUX-03 | Phase 1 | Complete |
+| UIUX-04 | Phase 1 | Complete |
+| UIUX-05 | Phase 1 | Complete |
 | PORT-01 | Phase 2 | Pending |
 | PORT-02 | Phase 2 | Pending |
 | PORT-03 | Phase 2 | Pending |

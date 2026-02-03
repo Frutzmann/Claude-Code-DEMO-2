@@ -12,7 +12,7 @@ This roadmap delivers a SaaS web application that enables YouTube creators to ge
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation & Auth** - Secure authentication, onboarding, and UI foundation
+- [x] **Phase 1: Foundation & Auth** - Secure authentication, onboarding, and UI foundation
 - [ ] **Phase 2: Portraits** - Portrait library management
 - [ ] **Phase 3: Generation & Gallery** - Core thumbnail generation and results display
 - [ ] **Phase 4: Billing & Settings** - Stripe subscriptions and user settings
@@ -33,10 +33,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 4 plans in 3 waves
 
 Plans:
-- [ ] 01-01-PLAN.md — Project & UI foundation (Next.js, Tailwind, shadcn/ui, dark theme)
-- [ ] 01-02-PLAN.md — Supabase backend setup (clients, schema, storage, admin utility)
-- [ ] 01-03-PLAN.md — Auth pages & middleware (login, signup, password reset, route protection)
-- [ ] 01-04-PLAN.md — Onboarding flow (portrait upload, welcome tutorial, dashboard shell)
+- [x] 01-01-PLAN.md — Project & UI foundation (Next.js, Tailwind, shadcn/ui, dark theme)
+- [x] 01-02-PLAN.md — Supabase backend setup (clients, schema, storage, admin utility)
+- [x] 01-03-PLAN.md — Auth pages & middleware (login, signup, password reset, route protection)
+- [x] 01-04-PLAN.md — Onboarding flow (portrait upload, welcome tutorial, dashboard shell)
 
 ### Phase 2: Portraits
 **Goal**: Users can manage a library of portrait images for use in thumbnail generation
@@ -107,7 +107,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Auth | 0/4 | Planned | - |
+| 1. Foundation & Auth | 4/4 | Complete ✓ | 2026-02-03 |
 | 2. Portraits | 0/1 | Not started | - |
 | 3. Generation & Gallery | 0/3 | Not started | - |
 | 4. Billing & Settings | 0/3 | Not started | - |
