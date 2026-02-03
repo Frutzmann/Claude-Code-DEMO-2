@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Crown, Loader2, Zap } from "lucide-react"
+import { toast } from "sonner"
 import { formatDistanceToNow } from "date-fns"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
@@ -38,16 +39,14 @@ export function PlanDisplay({
   const usagePercent = isAdmin ? 0 : Math.min((used / limit) * 100, 100)
   const isOverQuota = !isAdmin && used >= limit
 
-  async function handleUpgrade(targetPlanId: PlanId) {
-    const targetPlan = PLANS[targetPlanId]
-    if (!targetPlan.priceId) return
-
+  async function handleUpgrade(targetPlanId: Exclude<PlanId, 'free'>) {
     setLoadingPlan(targetPlanId)
     try {
-      const result = await createCheckoutSession(targetPlan.priceId)
+      const result = await createCheckoutSession(targetPlanId)
       if (result?.error) {
         // Error handling - result only returns on error since success redirects
         console.error(result.error)
+        toast.error(result.error)
       }
     } catch (error) {
       console.error("Failed to create checkout session:", error)

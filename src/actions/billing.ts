@@ -3,12 +3,24 @@
 import { createClient } from "@/lib/supabase/server"
 import { stripe } from "@/lib/stripe/server"
 import { redirect } from "next/navigation"
+import { type PlanId } from "@/lib/billing/plans"
+
+// Server-side price ID lookup (env vars not available on client)
+const STRIPE_PRICES: Record<Exclude<PlanId, 'free'>, string | undefined> = {
+  pro: process.env.STRIPE_PRICE_PRO,
+  agency: process.env.STRIPE_PRICE_AGENCY,
+}
 
 /**
  * Create a Stripe Checkout session for subscription upgrade.
  * Redirects user to Stripe-hosted checkout page.
  */
-export async function createCheckoutSession(priceId: string) {
+export async function createCheckoutSession(planId: Exclude<PlanId, 'free'>) {
+  const priceId = STRIPE_PRICES[planId]
+
+  if (!priceId) {
+    return { error: `Price not configured for ${planId} plan. Set STRIPE_PRICE_${planId.toUpperCase()} env var.` }
+  }
   const supabase = await createClient()
 
   const {
