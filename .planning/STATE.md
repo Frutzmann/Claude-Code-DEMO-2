@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-03)
 
 **Core value:** Users can generate high-quality YouTube thumbnails without design skills
-**Current focus:** Phase 4 - Billing & Settings
+**Current focus:** Phase 4 - Billing & Settings (COMPLETE)
 
 ## Current Position
 
 Phase: 4 of 5 (Billing & Settings)
-Plan: 2 of 3 in current phase
-Status: In progress
-Last activity: 2026-02-03 — Completed 04-02-PLAN.md
+Plan: 3 of 3 in current phase (PHASE COMPLETE)
+Status: Phase complete
+Last activity: 2026-02-03 — Completed 04-03-PLAN.md
 
-Progress: [████████░░] 73%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 12
-- Average duration: 3.5 min
-- Total execution time: 42 min
+- Total plans completed: 13
+- Average duration: 3.8 min
+- Total execution time: 50 min
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [████████░░] 73%
 | 1 | 4 | 19 min | 4.75 min |
 | 2 | 2 | 4 min | 2 min |
 | 3 | 4 | 12 min | 3 min |
-| 4 | 2 | 7 min | 3.5 min |
+| 4 | 3 | 15 min | 5 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-02 (3m), 03-03 (3m), 03-04 (4m), 04-01 (4m), 04-02 (3m)
+- Last 5 plans: 03-03 (3m), 03-04 (4m), 04-01 (4m), 04-02 (3m), 04-03 (8m)
 - Trend: Steady
 
 *Updated after each plan completion*
@@ -74,6 +74,9 @@ Recent decisions affecting current work:
 - Billing period quota: paid users use Stripe billing period, free users use calendar month
 - Subscription metadata must include supabase_user_id for webhook linking
 - Service role client used for webhook handlers that bypass RLS
+- Tabs UI for Profile/Billing separation in Settings
+- Admin sees Crown icon + "Admin - Unlimited" badge with no upgrade CTAs
+- Free users see billing period reset info, paid users see renewal date
 
 ### Pending Todos
 
@@ -97,9 +100,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-03T16:01:09Z
-Stopped at: Completed 04-02-PLAN.md
+Last session: 2026-02-03T16:13:00Z
+Stopped at: Completed 04-03-PLAN.md (Phase 4 complete)
 Resume file: None
 
 ---
-*Next step: Execute 04-03-PLAN.md (Settings UI)*
+*Next step: Execute Phase 5 (Polish & Launch)*
