@@ -47,10 +47,11 @@ Plans:
   2. User can view all portraits in a grid layout with labels
   3. User can set one portrait as "active" (pre-selected in generation form)
   4. User can delete portraits except the last one
-**Plans**: TBD
+**Plans**: 2 plans in 2 waves
 
 Plans:
-- [ ] 02-01: Portrait management UI and storage
+- [ ] 02-01-PLAN.md — Database schema and server actions (portraits table, CRUD operations)
+- [ ] 02-02-PLAN.md — Portraits page UI (grid layout, upload dialog, card components)
 
 ### Phase 3: Generation & Gallery
 **Goal**: Users can generate AI thumbnails and view/download results
@@ -107,8 +108,8 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Auth | 4/4 | Complete ✓ | 2026-02-03 |
-| 2. Portraits | 0/1 | Not started | - |
+| 1. Foundation & Auth | 4/4 | Complete | 2026-02-03 |
+| 2. Portraits | 0/2 | Planning complete | - |
 | 3. Generation & Gallery | 0/3 | Not started | - |
 | 4. Billing & Settings | 0/3 | Not started | - |
 | 5. Landing Page | 0/1 | Not started | - |
