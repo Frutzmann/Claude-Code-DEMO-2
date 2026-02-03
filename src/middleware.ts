@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import { updateSession } from "@/lib/supabase/middleware"
 
 const PUBLIC_ROUTES = [
+  "/",
   "/login",
   "/signup",
   "/forgot-password",
@@ -22,20 +23,15 @@ export async function middleware(request: NextRequest) {
   )
 
   if (isPublicRoute) {
+    // Let "/" (landing page) render for all users - no redirect
+    if (pathname === "/") {
+      return supabaseResponse
+    }
     // Redirect logged-in users away from auth pages (but not callback)
     if (user && pathname !== "/auth/callback") {
       return NextResponse.redirect(new URL("/dashboard", request.url))
     }
     return supabaseResponse
-  }
-
-  // Redirect from home page
-  if (pathname === "/") {
-    if (user) {
-      return NextResponse.redirect(new URL("/dashboard", request.url))
-    } else {
-      return NextResponse.redirect(new URL("/login", request.url))
-    }
   }
 
   // Require auth for protected routes
