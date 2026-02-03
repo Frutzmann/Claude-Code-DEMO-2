@@ -1,0 +1,1 @@
+visage centré au milieu;gauche:screenshot workflow n8n réel;droite: screenshot SaaS réel;fond code couleur;split screen transformation;flèche ou séparation visuelle

@@ -26,13 +26,13 @@ export default async function DashboardLayout({
     .single()
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-mesh">
       <Sidebar />
 
       {/* Main content area */}
       <div className="md:pl-64">
         {/* Header */}
-        <header className="sticky top-0 z-30 glass border-b">
+        <header className="sticky top-0 z-30 glass border-b border-purple-500/10">
           <div className="flex h-16 items-center justify-end px-4 md:px-6">
             <UserNav
               user={{

@@ -1,0 +1,1016 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appUxa9p0fQwPhQOd",
+          "mode": "list",
+          "cachedResultName": "Atelier Automatisations",
+          "cachedResultUrl": "https://airtable.com/appUxa9p0fQwPhQOd"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblZzYMXMLqhnN5AW",
+          "mode": "list",
+          "cachedResultName": "Persistent Images",
+          "cachedResultUrl": "https://airtable.com/appUxa9p0fQwPhQOd/tblZzYMXMLqhnN5AW"
+        },
+        "options": {}
+      },
+      "id": "fetch-head-image",
+      "name": "Fetch Head Image",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        -240,
+        320
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "UB9UH3QdfkJNKYgJ",
+          "name": "Airtable Admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare images for upload to Kie.ai\nconst formData = $('Webhook').first().json;\nconst uploads = [];\nconst timestamp = Date.now();\n\n\nconst binary = formData.body['Background Images']\nif (binary.length > 0) {  \n  let bgIndex = 0;\n  for (const img of binary) {\n    const bgBinary = img;\n    if (bgBinary && bgBinary.filename) {\n      const bgFileName = `bg_${timestamp}_${bgIndex}_${$now}.png`;\n      \n      uploads.push({\n        type: 'background',\n        fileName: bgFileName,\n        base64Data: bgBinary.data,\n        mimeType: bgBinary.mimeType || 'image/png',\n        index: bgIndex\n      });\n      bgIndex++;\n    }\n  }\n}\n\n// Pass keywords forward\nconst keywords = formData.Keywords || formData.keywords || '';\n\nreturn uploads.map(upload => ({\n  json: {\n    ...upload,\n    keywords\n  }\n}));"
+      },
+      "id": "prepare-images",
+      "name": "Prepare Images",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -16,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kieai.redpandaai.co/api/file-base64-upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "base64Data",
+              "value": "={{ $json.base64Data }}"
+            },
+            {
+              "name": "uploadPath",
+              "value": "images/base64"
+            },
+            {
+              "name": "fileName",
+              "value": "={{ $json.fileName }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "upload-to-kie",
+      "name": "Upload to Kie.ai",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        208,
+        320
+      ],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "dy5ts9eYr8dJ6C1T",
+          "name": "Kie.AI FRANCOIS"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const headUri = $('Fetch Head Image').first().json.Attachments[0].url\nconst backgroundUris = $input.all();\nconst keywords = $('Webhook').first().json.body.Keywords\n\nreturn [{\n  json: {\n    headUri,\n    backgroundUris: backgroundUris.map(b => b.json.data.downloadUrl),\n    keywords\n  }\n}];"
+      },
+      "id": "organize-uris",
+      "name": "Organize URIs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# ROLE\nYou are a World-Class YouTube Thumbnail Designer specializing in Tech/Automation content. You master the \"High-Gloss Tech\" aesthetic with vibrant lighting against clean dark backgrounds.\n\nYou are also an **Image Analyst** - you interpret provided assets (logos, screenshots, workflows) to determine the optimal thumbnail composition.\n\n---\n\n# TASK\nGenerate highly clickable YouTube thumbnails (1280x720) by analyzing:\n1. **Keywords** - Topic/theme/emotion of the video\n2. **Provided Images** - Visual assets to incorporate strategically\n3. **Reference Portrait** - The persistent face photo to transform\n\n---\n\n# INPUT ASSETS\n\n## 1. `reference_portrait` (PERSISTENT - Always provided)\nThe creator's face photo. This is your **anatomical base** that you will:\n- Keep the exact facial structure, features, and identity\n- **TRANSFORM the expression** based on keyword semantics (see Expression Matrix below)\n- Apply the signature lighting treatment\n\n## 2. `keywords` (Always provided)\nTopic words that determine:\n- The emotional tone → facial expression to generate\n- The headline text → French accroche\n- Background context elements\n\n## 3. `context_images` (Variable - 0 to N images)\nAnalyze each image and classify it:\n\n| Image Type | How to Use |\n|------------|-----------|\n| **Logo** | Feature prominently with emissive glow, position in corners or floating |\n| **Workflow/Diagram** | Blur heavily for background texture, extract color accents |\n| **Screenshot/UI** | Use as blurred background element or \"screen reflection\" on subject |\n| **Code Snippet** | Subtle background element with syntax highlighting glow |\n| **Product/Tool** | Feature alongside subject, apply matching lighting |\n\n---\n\n# EXPRESSION MATRIX (Portrait Transformation)\n\nBased on keyword semantics, transform the reference portrait expression:\n\n| Keyword Signals | Target Expression | Face Cues |\n|-----------------|-------------------|-----------|\n| \"automatiser\", \"gagner du temps\", \"productivité\" | **Relieved / Satisfied** | Soft smile, relaxed brows, slight head tilt |\n| \"erreur\", \"bug\", \"problème\", \"chaos\" | **Frustrated / Overwhelmed** | Furrowed brows, slight frown, tense jaw |\n| \"nouveau\", \"découverte\", \"secret\", \"révélation\" | **Surprised / Amazed** | Wide eyes, raised eyebrows, open mouth (O shape) |\n| \"tutoriel\", \"comment\", \"guide\" | **Confident / Friendly** | Direct gaze, slight smile, approachable |\n| \"comparaison\", \"vs\", \"meilleur\" | **Intrigued / Analytical** | One raised eyebrow, slight smirk, thoughtful |\n| \"résultat\", \"succès\", \"gagné\" | **Excited / Triumphant** | Big smile, bright eyes, dynamic pose |\n| \"avant/après\", \"transformation\" | **DUAL**: Left=stressed, Right=relieved | Split expression for split-screen |\n\n**CRITICAL:** The transformed expression must remain recognizable as the same person. Only modify expression muscles, not bone structure or identity features.\n\n---\n\n# STRICT COLOR PALETTE (MANDATORY)\n\n| Element | Color | Hex |\n|---------|-------|-----|\n| Background Base | Deep Navy | `#011638` |\n| Primary Text | Off-White | `#EEF0F2` |\n| Glows & Accents | Purple/Magenta | `#9D4F9E` |\n| Chaos/Problem elements | Red/Orange | `#FF6B6B` |\n| Success/Solution elements | Green | `#4CAF50` |\n\n**CRITICAL:** Never deviate from this palette. The purple (#9D4F9E) is the signature glow color.\n\n---\n\n# PATTERN DETECTION (Auto-select composition)\n\nAnalyze the combination of keywords + context_images to select the optimal pattern:\n\n## Pattern A: TOOL SHOWCASE\n**Triggers:** Logo provided + keywords about a specific tool/service\n**Composition:**\n- Subject on left (40%)\n- Logo floating right with strong emissive glow\n- Tool name in headline\n- Expression: Excited or Confident\n\n## Pattern B: TRANSFORMATION / BEFORE-AFTER\n**Triggers:** Keywords contain \"avant/après\", \"transformation\", time savings, or workflow optimization\n**Composition:**\n- Split-screen diagonal\n- LEFT: \"Before\" state - chaos, red tints (#FF6B6B), stressed expression\n- RIGHT: \"After\" state - clean, purple tints (#9D4F9E), relieved expression\n- Arrow (→) or lightning bolt separator\n\n## Pattern C: WORKFLOW/AUTOMATION REVEAL\n**Triggers:** Workflow diagram or n8n screenshot provided\n**Composition:**\n- Subject centered or left\n- Blurred workflow as background (heavy bokeh)\n- Floating node icons extracted from workflow\n- Expression: Amazed or Triumphant\n\n## Pattern D: TUTORIAL / HOW-TO\n**Triggers:** Keywords contain \"comment\", \"tutoriel\", \"guide\", educational tone\n**Composition:**\n- Subject left, clean space right for text\n- Minimal background elements\n- Step numbers or bullet visual optional\n- Expression: Confident, approachable\n\n## Pattern E: PROBLEM-SOLUTION\n**Triggers:** Keywords mention a problem/pain point + solution\n**Composition:**\n- Subject with concerned-to-confident expression gradient\n- Problem visual (error screenshot, chaos) faded in background\n- Solution element (logo, checkmark) glowing prominently\n- Expression: Relieved or Triumphant\n\n## Pattern F: VERSUS / COMPARISON\n**Triggers:** Keywords contain \"vs\", \"comparaison\", \"meilleur\", or multiple logos provided\n**Composition:**\n- Subject centered with analytical expression\n- Competing elements on either side\n- \"VS\" badge or split background\n- Expression: Intrigued, one raised eyebrow\n\n---\n\n# CHARACTER RENDERING (CRITICAL)\n\n**Portrait Transformation Rules:**\n- Use reference_portrait as the EXACT anatomical base\n- Position: Left side or center, taking 40-50% of frame width\n- Scale: Face clearly visible, cropped at chest level\n- **Transform expression** according to Expression Matrix above\n\n**Skin & Features:**\n- Hyper-realistic but \"polished\" skin texture\n- Natural skin tones (beige/tan) - NO oversaturation\n- Crystal clear eyes with bright catchlights\n- Maintain all identity features (moles, beard, hair style)\n\n---\n\n# LIGHTING SETUP (THE \"POP\" FACTOR)\n\n**Multi-Source Lighting (NEVER flat):**\n\n1. **Key Light:** Soft, bright light on face center for visibility\n2. **Dual Rim Lights (SIGNATURE LOOK):**\n   - LEFT edge: Cyan/Blue tint (`#011638` lighter variant)\n   - RIGHT edge: Strong Magenta/Purple (`#9D4F9E`)\n   - Apply along face contour, neck, shoulders\n   - Creates 3D separation from background\n\n3. **Specular Highlights:**\n   - Subtle shine on forehead, nose bridge, cheekbones\n   - \"Premium hydrated\" look (luminous, not sweaty)\n\n4. **Asset Glow Reflection:**\n   - If logos/icons are present, their glow should subtly reflect on the subject's face\n   - Creates visual connection between subject and featured elements\n\n---\n\n# BACKGROUND DESIGN\n\n**Base:** Deep navy gradient (`#011638`)\n\n**Contextual Elements (from context_images):**\n- Workflow screenshots → Heavy blur, 40% opacity, background layer\n- Logos → Keep sharp but add glow halo\n- Code → Syntax-highlighted blur with green/purple accents\n- UI Screenshots → Perspective tilt, blur, background depth\n\n**Rules:**\n- Heavy Gaussian blur on screenshots/workflows (bokeh effect)\n- 60-70% opacity maximum for background elements\n- Elements must NOT compete with subject\n- Purple glow spots (`#9D4F9E`) scattered subtly\n\n---\n\n# TEXT TREATMENT\n\n**Headline (derived from keywords):**\n- Position: Bottom center or bottom-right\n- Font: Bold, sans-serif, ALL CAPS\n- Color: Off-white (`#EEF0F2`)\n- Effect: Strong outer glow in purple (`#9D4F9E`)\n- Max 3-4 words for impact\n- Language: **FRENCH**\n\n**Transformation Headlines:**\n- Use arrow symbol (→) between states\n- Examples: \"4H → 2 MIN\", \"CHAOS → CALME\", \"MANUEL → AUTO\"\n\n---\n\n# LOGO & ICON TREATMENT\n\n**When logos are provided in context_images:**\n- Position: Bottom corners or floating near subject's shoulder\n- Scale: Recognizable but not dominant (15-20% of frame height max)\n- Effect: Strong emissive glow (logo appears to emit light)\n- The glow should cast subtle colored reflection on nearby surfaces\n- If multiple logos: arrange in arc or stack, consistent sizing\n\n---\n\n# NEGATIVE CONSTRAINTS (NEVER DO)\n\n- Flat, even lighting\n- Busy, detailed, sharp backgrounds\n- Oversaturated skin tones\n- Colors outside the defined palette\n- Text that's hard to read at thumbnail size\n- Cluttered composition with too many elements\n- Generic stock photo aesthetic\n- Changing the person's identity/features (only expression changes)\n- Logos without glow treatment\n- Sharp unblurred screenshots in background\n\n---\n\nVARIABLES: \n\nHEAD IMAGE: {{ $json.headUri }}\nBACKGROUND URIS: {{ $json.backgroundUris }}\nKEYWORDS: {{ $json.keywords }}\n\n---\n\n# OUTPUT FORMAT\n\nGenerate **3 to 5 distinct image generation prompts**. Each prompt must:\n1. State which **Pattern** (A-F) is being used\n2. Describe the **expression transformation** applied to the portrait\n3. Specify how each **context_image** is incorporated\n4. Detail the **lighting setup** including asset reflections\n5. Include a unique **French headline** derived from keywords\n6. Specify all colors by hex code from the palette\n\n**Variation Strategy:**\n- Prompt 1: Most appropriate pattern based on input analysis\n- Prompt 2: Alternative pattern interpretation\n- Prompt 3: Creative hybrid of patterns\n- Prompts 4-5: Expression/composition variations of best patterns\n\n**Response Format:** Return a JSON array of prompt strings ONLY.\n```json\n[\"prompt 1...\", \"prompt 2...\", \"prompt 3...\"]\n```\n",
+        "options": {
+          "returnIntermediateSteps": false
+        }
+      },
+      "id": "ai-prompt-generator",
+      "name": "AI Prompt Generator",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        656,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-3-pro-preview",
+        "options": {}
+      },
+      "id": "openrouter-model",
+      "name": "OpenRouter Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        736,
+        544
+      ],
+      "credentials": {
+        "openRouterApi": {
+          "id": "Ajg3XUFKTa19PqTM",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse AI-generated prompts and create task items\nconst organizedData = $('Organize URIs').first().json;\nconst aiOutput = $('AI Prompt Generator').first().json;\n\n// Extract prompts from AI output\nlet prompts = [];\ntry {\n  // Try to parse as JSON array\n  const outputText = aiOutput.output || aiOutput.text || JSON.stringify(aiOutput);\n  \n  // Find JSON array in the response\n  const jsonMatch = outputText.match(/\\[([\\s\\S]*?)\\]/); \n  if (jsonMatch) {\n    prompts = JSON.parse(jsonMatch[0]);\n  } else {\n    // Fallback: split by newlines and clean\n    prompts = outputText.split('\\n')\n      .filter(line => line.trim() && !line.startsWith('[') && !line.startsWith(']'))\n      .map(line => line.replace(/^[\"']|[\"'],?$/g, '').trim())\n      .filter(line => line.length > 10);\n  }\n} catch (e) {\n  console.log('Parse error:', e.message);\n  prompts = ['A dramatic before/after transformation thumbnail with bold contrast'];\n}\n\n// Create task items: each prompt × each background\nconst taskItems = [];\n\nfor (let promptIndex = 0; promptIndex < prompts.length; promptIndex++) {\n  const prompt = prompts[promptIndex];\n  \n  for (let bgIndex = 0; bgIndex < organizedData.backgroundUris.length; bgIndex++) {\n    taskItems.push({\n      json: {\n        prompt,\n        promptIndex,\n        backgroundIndex: bgIndex,\n        headUri: organizedData.headUri,\n        backgroundUri: organizedData.backgroundUris,\n        keywords: organizedData.keywords\n      }\n    });\n  }\n}\n\nreturn taskItems;"
+      },
+      "id": "parse-prompts",
+      "name": "Parse Prompts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1008,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/jobs/createTask",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"nano-banana-pro\",\n  \"input\": {\n    \"prompt\": \"{{ $('Parse Prompts').item.json.prompt }}\",\n    \"image_input\": [\"{{ $json.headUri }}\", \"{{ $json.backgroundUri.join('\",\"') }}\"],\n    \"aspect_ratio\": \"16:9\",\n    \"resolution\": \"1K\",\n    \"output_format\": \"png\"\n  }\n}",
+        "options": {}
+      },
+      "id": "create-kie-task",
+      "name": "Create Kie Task",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1232,
+        320
+      ],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "dy5ts9eYr8dJ6C1T",
+          "name": "Kie.AI FRANCOIS"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "taskId",
+              "name": "taskId",
+              "type": "string",
+              "value": "={{ $json.data ? $json.data.taskId : $json.taskId }}"
+            },
+            {
+              "id": "prompt",
+              "name": "prompt",
+              "type": "string",
+              "value": "={{ $('Split In Batches').item.json.prompt }}"
+            },
+            {
+              "id": "promptIndex",
+              "name": "promptIndex",
+              "type": "number",
+              "value": "={{ $('Split In Batches').item.json.promptIndex }}"
+            },
+            {
+              "id": "backgroundIndex",
+              "name": "backgroundIndex",
+              "type": "number",
+              "value": "={{ $('Split In Batches').item.json.backgroundIndex }}"
+            },
+            {
+              "id": "keywords",
+              "name": "keywords",
+              "type": "string",
+              "value": "={{ $('Split In Batches').item.json.keywords }}"
+            },
+            {
+              "id": "headUri",
+              "name": "headUri",
+              "type": "string",
+              "value": "={{ $('Split In Batches').item.json.headUri }}"
+            },
+            {
+              "id": "backgroundUri",
+              "name": "backgroundUri",
+              "type": "string",
+              "value": "={{ $('Split In Batches').item.json.backgroundUri }}"
+            },
+            {
+              "id": "pollCount",
+              "name": "pollCount",
+              "type": "number",
+              "value": 0
+            },
+            {
+              "id": "maxPolls",
+              "name": "maxPolls",
+              "type": "number",
+              "value": 42
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "store-task-id",
+      "name": "Store Task ID",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "id": "wait-10-seconds",
+      "name": "Wait 10 Seconds",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1904,
+        320
+      ],
+      "webhookId": "59d87dfc-43c7-4688-af18-0c28800018a9"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/jobs/recordInfo?taskId={{ $json.taskId }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "id": "check-status",
+      "name": "Check Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2128,
+        256
+      ],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "dy5ts9eYr8dJ6C1T",
+          "name": "Kie.AI FRANCOIS"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "status-completed",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.data.state }}",
+              "rightValue": "success"
+            },
+            {
+              "id": "status-failed",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.data.state }}",
+              "rightValue": "failed"
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "is-complete",
+      "name": "Is Complete?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2352,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Increment poll count and check timeout\nconst item = $input.item.json;\nconst prevData = $('Store Task ID').first().json;\n\nconst pollCount = (prevData.pollCount || 0) + 1;\nconst maxPolls = prevData.maxPolls || 30;\n\nreturn {\n  json: {\n    ...item,\n    taskId: prevData.taskId,\n    prompt: prevData.prompt,\n    promptIndex: prevData.promptIndex,\n    backgroundIndex: prevData.backgroundIndex,\n    keywords: prevData.keywords,\n    headUri: prevData.headUri,\n    backgroundUri: prevData.backgroundUri,\n    pollCount,\n    maxPolls,\n    isTimeout: pollCount >= maxPolls\n  }\n};"
+      },
+      "id": "check-timeout",
+      "name": "Check Timeout",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2576,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "is-timeout",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "boolean",
+                "operation": "equals"
+              },
+              "leftValue": "={{ $json.isTimeout }}",
+              "rightValue": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "timeout-check",
+      "name": "Timeout?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2800,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.ImageUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "thumbnail_image"
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "id": "download-image",
+      "name": "Download Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2800,
+        160
+      ],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "task_id",
+              "name": "task_id",
+              "type": "string",
+              "value": "={{ $json.taskId }}"
+            },
+            {
+              "id": "prompt",
+              "name": "prompt",
+              "type": "string",
+              "value": "={{ $json.prompt }}"
+            },
+            {
+              "id": "prompt_index",
+              "name": "prompt_index",
+              "type": "number",
+              "value": "={{ $json.promptIndex }}"
+            },
+            {
+              "id": "background_index",
+              "name": "background_index",
+              "type": "number",
+              "value": "={{ $json.backgroundIndex }}"
+            },
+            {
+              "id": "status",
+              "name": "status",
+              "type": "string",
+              "value": "={{ $json.status }}"
+            },
+            {
+              "id": "image_url",
+              "name": "image_url",
+              "type": "string",
+              "value": "={{ $json.ImageUrl }}"
+            },
+            {
+              "id": "keywords",
+              "name": "keywords",
+              "type": "string",
+              "value": "={{ $json.keywords }}"
+            },
+            {
+              "id": "generated_at",
+              "name": "generated_at",
+              "type": "string",
+              "value": "={{ $now.toISO() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "prepare-record",
+      "name": "Prepare Airtable Record",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3024,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appUxa9p0fQwPhQOd",
+          "mode": "list",
+          "cachedResultName": "Atelier Automatisations",
+          "cachedResultUrl": "https://airtable.com/appUxa9p0fQwPhQOd"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblZ1ou1LdfKtErXf",
+          "mode": "list",
+          "cachedResultName": "Generated Thumbnails",
+          "cachedResultUrl": "https://airtable.com/appUxa9p0fQwPhQOd/tblZ1ou1LdfKtErXf"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "task_id",
+              "displayName": "task_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "prompt_index",
+              "displayName": "prompt_index",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "background_index",
+              "displayName": "background_index",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "image_url",
+              "displayName": "image_url",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "keywords",
+              "displayName": "keywords",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "generated_at",
+              "displayName": "generated_at",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "store-airtable",
+      "name": "Store in Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        3248,
+        416
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "UB9UH3QdfkJNKYgJ",
+          "name": "Airtable Admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Log error details for timeout/failed tasks\nconst item = $input.item.json;\n\nconsole.log('Task Error:', {\n  taskId: item.taskId,\n  prompt: item.prompt,\n  promptIndex: item.promptIndex,\n  backgroundIndex: item.backgroundIndex,\n  isTimeout: item.isTimeout,\n  errorMessage: item.errorMessage,\n  pollCount: item.pollCount\n});\n\n// Prepare error record for Airtable\nreturn {\n  json: {\n    task_id: item.taskId || 'unknown',\n    prompt: item.prompt || '',\n    prompt_index: item.promptIndex || 0,\n    background_index: item.backgroundIndex || 0,\n    status: item.isTimeout ? 'timeout' : 'failed',\n    image_url: '',\n    keywords: item.keywords || '',\n    generated_at: new Date().toISOString(),\n    error_message: item.isTimeout ? 'Polling timeout after 5 minutes' : (item.errorMessage || 'Unknown error')\n  }\n};"
+      },
+      "id": "error-handler",
+      "name": "Handle Errors",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3024,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1680,
+        128
+      ],
+      "id": "72864b30-3268-4e2c-938c-32b5ebbd669b",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "9be9d624-772f-4f20-8946-45ff51296d1f",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -464,
+        224
+      ],
+      "id": "6db8366f-1522-41b5-8f46-20d0c03e99c5",
+      "name": "Webhook",
+      "webhookId": "9be9d624-772f-4f20-8946-45ff51296d1f",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1456,
+        320
+      ],
+      "id": "7683494b-5fb9-4276-a07e-712b037146bf",
+      "name": "Split In Batches",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        416
+      ],
+      "id": "8322b45f-2645-4eb1-9d85-a19bd1920985",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3ceb8592-3cdb-465c-92fa-34d982c5e012",
+              "name": "taskId",
+              "value": "={{ $json.data.taskId }}",
+              "type": "string"
+            },
+            {
+              "id": "406e7352-a67e-425e-84ef-f4f64db77f72",
+              "name": "prompt",
+              "value": "={{ $('Parse Prompts').item.json.prompt }}",
+              "type": "string"
+            },
+            {
+              "id": "9d18a226-aba4-4bc4-8c74-3767ed15a5e3",
+              "name": "promptIndex",
+              "value": "={{ $('Parse Prompts').item.json.promptIndex }}",
+              "type": "number"
+            },
+            {
+              "id": "163f52ce-beee-4a64-ae01-f275e586714b",
+              "name": "backgroundIndex",
+              "value": "={{ $('Parse Prompts').item.json.backgroundIndex }}",
+              "type": "number"
+            },
+            {
+              "id": "3427ebee-ee4d-4bb7-affa-a937431256ff",
+              "name": "keywords",
+              "value": "={{ $('Parse Prompts').item.json.keywords }}",
+              "type": "string"
+            },
+            {
+              "id": "2100a127-d142-47aa-8f87-0e4fa2f2009d",
+              "name": "status",
+              "value": "={{ $json.data.state }}",
+              "type": "string"
+            },
+            {
+              "id": "59fee9b7-785c-42cc-8725-498307621b4b",
+              "name": "ImageUrl",
+              "value": "={{ $json.data.resultJson.parseJson().resultUrls[0] }}",
+              "type": "string"
+            },
+            {
+              "id": "6edb43b9-c52e-4ce8-9a4b-ed90b3eca301",
+              "name": "isFailed",
+              "value": "={{ $json.data.failCode !== null}}",
+              "type": "boolean"
+            },
+            {
+              "id": "f6f11469-34fc-4449-9457-1b069f8d274e",
+              "name": "errorMessage",
+              "value": "={{ $json.data.failMsg }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2576,
+        160
+      ],
+      "id": "e349c447-bda7-4eed-a1c5-786c5b4c3e21",
+      "name": "Process Result"
+    }
+  ],
+  "connections": {
+    "Fetch Head Image": {
+      "main": [
+        [
+          {
+            "node": "Prepare Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Images": {
+      "main": [
+        [
+          {
+            "node": "Upload to Kie.ai",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to Kie.ai": {
+      "main": [
+        [
+          {
+            "node": "Organize URIs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Organize URIs": {
+      "main": [
+        [
+          {
+            "node": "AI Prompt Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Prompt Generator": {
+      "main": [
+        [
+          {
+            "node": "Parse Prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Prompt Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Prompts": {
+      "main": [
+        [
+          {
+            "node": "Create Kie Task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Kie Task": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Task ID": {
+      "main": [
+        [
+          {
+            "node": "Wait 10 Seconds",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 10 Seconds": {
+      "main": [
+        [
+          {
+            "node": "Check Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Status": {
+      "main": [
+        [
+          {
+            "node": "Is Complete?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Complete?": {
+      "main": [
+        [
+          {
+            "node": "Process Result",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Check Timeout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Timeout": {
+      "main": [
+        [
+          {
+            "node": "Timeout?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Timeout?": {
+      "main": [
+        [
+          {
+            "node": "Handle Errors",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait 10 Seconds",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Image": {
+      "main": [
+        [
+          {
+            "node": "Prepare Airtable Record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Airtable Record": {
+      "main": [
+        [
+          {
+            "node": "Store in Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store in Airtable": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle Errors": {
+      "main": [
+        [
+          {
+            "node": "Store in Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Fetch Head Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Store Task ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Fetch Head Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Result": {
+      "main": [
+        [
+          {
+            "node": "Download Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {
+    "When clicking ‘Execute workflow’": [
+      {}
+    ]
+  },
+  "meta": {
+    "instanceId": "65a80edec3c2f189f1ba8da4bc02879e832291c03bf833d4cbd1bff8ea19a66b"
+  }
+}

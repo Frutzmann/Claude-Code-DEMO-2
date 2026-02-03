@@ -67,7 +67,7 @@ export function Sidebar() {
       {/* Mobile overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden"
+          className="fixed inset-0 bg-navy-950/80 backdrop-blur-sm z-40 md:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -75,18 +75,20 @@ export function Sidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed left-0 top-0 h-screen w-64 glass border-r flex flex-col z-40 transition-transform duration-200",
+          "fixed left-0 top-0 h-screen w-64 glass border-r border-purple-500/10 flex flex-col z-40 transition-transform duration-200",
           "md:translate-x-0",
           mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}
       >
         {/* Logo */}
-        <div className="p-6 border-b border-border/50">
+        <div className="p-6 border-b border-purple-500/10">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="size-8 rounded-lg bg-primary flex items-center justify-center">
-              <Sparkles className="size-4 text-primary-foreground" />
+            <div className="size-8 rounded-lg bg-purple-500 flex items-center justify-center shadow-md shadow-purple-500/30">
+              <Sparkles className="size-4 text-cream-50" />
             </div>
-            <span className="font-bold text-lg">Thumbnail Factory</span>
+            <span className="font-bold text-lg font-display">
+              Thumbnail Factory
+            </span>
           </Link>
         </div>
 
@@ -105,17 +107,22 @@ export function Sidebar() {
                   setMobileOpen(false)
                 }}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                   isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted",
+                    ? "bg-purple-500/20 text-cream-50 border-l-2 border-purple-500 pl-[10px]"
+                    : "text-muted-foreground hover:text-foreground hover:bg-purple-500/10",
                   item.disabled && "opacity-50 cursor-not-allowed"
                 )}
               >
-                <Icon className="size-5" />
+                <Icon
+                  className={cn(
+                    "size-5",
+                    isActive ? "text-purple-400" : "text-current"
+                  )}
+                />
                 {item.name}
                 {item.disabled && (
-                  <span className="ml-auto text-xs bg-muted px-1.5 py-0.5 rounded">
+                  <span className="ml-auto text-xs bg-purple-500/20 text-purple-300 px-1.5 py-0.5 rounded">
                     Soon
                   </span>
                 )}
@@ -125,8 +132,8 @@ export function Sidebar() {
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-border/50">
-          <p className="text-xs text-muted-foreground text-center">
+        <div className="p-4 border-t border-purple-500/10">
+          <p className="text-xs text-muted-foreground text-center font-body">
             YouTube Thumbnail Factory
           </p>
         </div>

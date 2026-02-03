@@ -7,7 +7,6 @@ export interface TriggerPayload {
   portrait_url: string
   background_urls: string[]
   keywords: string
-  callback_url: string
 }
 
 export interface N8nTriggerResponse {
@@ -18,12 +17,15 @@ export interface N8nTriggerResponse {
 /**
  * Triggers the n8n thumbnail generation workflow.
  *
- * The payload is formatted to match the existing n8n workflow structure:
- * - Keywords: semicolon-separated keywords
+ * The payload is formatted to match the n8n workflow structure:
+ * - Keywords: keywords describing the video topic
  * - Background Images: array of {url, index} objects
  * - portrait_url: URL of the head/portrait image
- * - generation_id: our database ID for callback correlation
- * - callback_url: where n8n should POST results when done
+ * - generation_id: database ID for correlating thumbnails
+ * - supabase_url: Supabase URL for storage uploads
+ *
+ * n8n inserts thumbnails directly into Supabase. A database trigger
+ * automatically updates the generations table with progress/status.
  */
 export async function triggerN8nWorkflow(payload: TriggerPayload): Promise<N8nTriggerResponse> {
   const webhookUrl = process.env.N8N_WEBHOOK_URL
@@ -38,13 +40,13 @@ export async function triggerN8nWorkflow(payload: TriggerPayload): Promise<N8nTr
     },
     body: JSON.stringify({
       generation_id: payload.generation_id,
-      Keywords: payload.keywords, // Match existing n8n workflow format
+      Keywords: payload.keywords,
       portrait_url: payload.portrait_url,
       "Background Images": payload.background_urls.map((url, i) => ({
         url,
         index: i,
       })),
-      callback_url: payload.callback_url,
+      supabase_url: process.env.NEXT_PUBLIC_SUPABASE_URL,
     }),
   })
 

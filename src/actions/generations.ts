@@ -245,7 +245,12 @@ export async function getGenerationQuota() {
     .single()
 
   // Determine plan and quota
+  console.log('[Quota] Subscription:', subscription)
+  console.log('[Quota] Price ID from DB:', subscription?.price_id)
+  console.log('[Quota] STRIPE_PRICE_PRO env:', process.env.STRIPE_PRICE_PRO)
+  console.log('[Quota] STRIPE_PRICE_AGENCY env:', process.env.STRIPE_PRICE_AGENCY)
   const plan = getPlanByPriceId(subscription?.price_id ?? null)
+  console.log('[Quota] Resolved plan:', plan)
   const quota = getPlanQuota(plan)
 
   // Determine period (billing period for subscribers, calendar month for free)

@@ -18,9 +18,11 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   // Allow public routes
-  const isPublicRoute = PUBLIC_ROUTES.some((route) =>
-    pathname.startsWith(route)
-  )
+  const isPublicRoute = PUBLIC_ROUTES.some((route) => {
+    // Exact match for root path to avoid matching everything
+    if (route === "/") return pathname === "/"
+    return pathname.startsWith(route)
+  })
 
   if (isPublicRoute) {
     // Let "/" (landing page) render for all users - no redirect

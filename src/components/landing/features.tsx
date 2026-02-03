@@ -43,14 +43,14 @@ const features = [
 
 export function Features() {
   return (
-    <section id="features" className="py-24">
+    <section id="features" className="py-24 bg-mesh">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <AnimatedSection>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+            <h2 className="text-3xl font-display tracking-tight sm:text-4xl lg:text-5xl mb-4">
               Everything You Need
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-body">
               Professional thumbnails without the complexity
             </p>
           </AnimatedSection>
@@ -59,11 +59,17 @@ export function Features() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <AnimatedSection key={feature.title} delay={index * 0.1}>
-              <Card className="glass h-full">
+              <Card className="glass h-full card-hover">
                 <CardHeader>
-                  <feature.icon className="size-10 text-primary mb-4" />
-                  <CardTitle>{feature.title}</CardTitle>
-                  <CardDescription>{feature.description}</CardDescription>
+                  <div className="size-12 rounded-lg bg-purple-500/20 flex items-center justify-center mb-4">
+                    <feature.icon className="size-6 text-purple-400" />
+                  </div>
+                  <CardTitle className="font-display text-lg">
+                    {feature.title}
+                  </CardTitle>
+                  <CardDescription className="font-body">
+                    {feature.description}
+                  </CardDescription>
                 </CardHeader>
               </Card>
             </AnimatedSection>

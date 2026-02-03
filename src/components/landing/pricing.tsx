@@ -61,12 +61,12 @@ export function Pricing() {
   return (
     <section id="pricing" className="py-24">
       <div className="max-w-5xl mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <AnimatedSection>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+            <h2 className="text-3xl font-display tracking-tight sm:text-4xl lg:text-5xl mb-4">
               Simple, Transparent Pricing
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-body">
               Start free, upgrade when you&apos;re ready
             </p>
           </AnimatedSection>
@@ -78,31 +78,40 @@ export function Pricing() {
               <Card
                 className={cn(
                   "glass h-full relative flex flex-col",
-                  tier.highlighted &&
-                    "border-primary ring-2 ring-primary/20"
+                  tier.highlighted && "glow-border purple-glow"
                 )}
               >
                 {tier.highlighted && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-full">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+                    <span className="bg-purple-500 text-cream-50 text-xs font-medium px-3 py-1 rounded-full shadow-lg shadow-purple-500/30">
                       Most Popular
                     </span>
                   </div>
                 )}
                 <CardHeader className="text-center pt-8">
-                  <CardTitle className="text-xl">{tier.name}</CardTitle>
-                  <CardDescription>{tier.description}</CardDescription>
+                  <CardTitle className="text-xl font-display">
+                    {tier.name}
+                  </CardTitle>
+                  <CardDescription className="font-body">
+                    {tier.description}
+                  </CardDescription>
                   <div className="mt-4">
-                    <span className="text-4xl font-bold">{tier.price}</span>
-                    <span className="text-muted-foreground">/month</span>
+                    <span className="text-4xl font-bold font-display">
+                      {tier.price}
+                    </span>
+                    <span className="text-muted-foreground font-body">
+                      /month
+                    </span>
                   </div>
                 </CardHeader>
                 <CardContent className="flex-1">
                   <ul className="space-y-3">
                     {tier.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-3">
-                        <Check className="size-5 text-primary shrink-0 mt-0.5" />
-                        <span className="text-sm">{feature}</span>
+                        <div className="size-5 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0 mt-0.5">
+                          <Check className="size-3 text-purple-400" />
+                        </div>
+                        <span className="text-sm font-body">{feature}</span>
                       </li>
                     ))}
                   </ul>
