@@ -7,7 +7,7 @@ const PUBLIC_ROUTES = [
   "/forgot-password",
   "/reset-password",
   "/auth/callback",
-  "/api/webhooks", // n8n callback and other server-to-server webhooks
+  "/api/webhooks/stripe",
 ]
 
 const ONBOARDING_ROUTES = ["/onboarding", "/welcome"]
