@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-03)
 
 **Core value:** Users can generate high-quality YouTube thumbnails without design skills
-**Current focus:** Phase 4 - Billing & Settings (COMPLETE)
+**Current focus:** Phase 5 - Landing Page (IN PROGRESS)
 
 ## Current Position
 
-Phase: 4 of 5 (Billing & Settings)
-Plan: 3 of 3 in current phase (PHASE COMPLETE)
-Status: Phase complete
-Last activity: 2026-02-03 — Completed 04-03-PLAN.md
+Phase: 5 of 5 (Landing Page)
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-02-03 — Completed 05-01-PLAN.md
 
-Progress: [████████░░] 80%
+Progress: [██████████████░░] 87%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 13
-- Average duration: 3.8 min
-- Total execution time: 50 min
+- Total plans completed: 14
+- Average duration: 3.9 min
+- Total execution time: 54 min
 
 **By Phase:**
 
@@ -31,9 +31,10 @@ Progress: [████████░░] 80%
 | 2 | 2 | 4 min | 2 min |
 | 3 | 4 | 12 min | 3 min |
 | 4 | 3 | 15 min | 5 min |
+| 5 | 1 | 4 min | 4 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-03 (3m), 03-04 (4m), 04-01 (4m), 04-02 (3m), 04-03 (8m)
+- Last 5 plans: 03-04 (4m), 04-01 (4m), 04-02 (3m), 04-03 (8m), 05-01 (4m)
 - Trend: Steady
 
 *Updated after each plan completion*
@@ -77,6 +78,9 @@ Recent decisions affecting current work:
 - Tabs UI for Profile/Billing separation in Settings
 - Admin sees Crown icon + "Admin - Unlimited" badge with no upgrade CTAs
 - Free users see billing period reset info, paid users see renewal date
+- Motion library (motion/react) for landing page animations
+- Landing page renders same content for all users (no auth-based redirects)
+- Smooth scroll via CSS scroll-behavior property
 
 ### Pending Todos
 
@@ -96,13 +100,13 @@ Recent decisions affecting current work:
 
 ### Blockers/Concerns
 
-None yet.
+- Pre-existing radix-ui 1.4.3 + Next.js 15.3.1 compatibility issue causes production build to fail with "<Html> should not be imported" error. Dev server works fine. Needs investigation.
 
 ## Session Continuity
 
-Last session: 2026-02-03T16:13:00Z
-Stopped at: Completed 04-03-PLAN.md (Phase 4 complete)
+Last session: 2026-02-03T17:39:00Z
+Stopped at: Completed 05-01-PLAN.md
 Resume file: None
 
 ---
-*Next step: Execute Phase 5 (Polish & Launch)*
+*Next step: Execute 05-02-PLAN.md (Features and Pricing sections)*

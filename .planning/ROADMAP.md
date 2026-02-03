@@ -100,7 +100,7 @@ Plans:
 **Plans**: 2 plans in 2 waves
 
 Plans:
-- [ ] 05-01-PLAN.md — Infrastructure + Hero/Navbar (motion library, middleware update, hero section)
+- [x] 05-01-PLAN.md — Infrastructure + Hero/Navbar (motion library, middleware update, hero section)
 - [ ] 05-02-PLAN.md — Features/Pricing/Testimonials/CTA (complete landing page sections)
 
 ## Progress
@@ -114,7 +114,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 2. Portraits | 2/2 | Complete | 2026-02-03 |
 | 3. Generation & Gallery | 4/4 | Complete | 2026-02-03 |
 | 4. Billing & Settings | 3/3 | Complete | 2026-02-03 |
-| 5. Landing Page | 0/2 | Not started | - |
+| 5. Landing Page | 1/2 | In progress | - |
 
 ---
 *Roadmap created: 2026-02-03*
