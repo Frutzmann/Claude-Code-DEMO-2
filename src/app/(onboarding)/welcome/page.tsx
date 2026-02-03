@@ -6,7 +6,7 @@ export default function WelcomePage() {
       <div className="space-y-2 text-center">
         <h2 className="text-2xl font-bold">Welcome to YouTube Thumbnail Factory</h2>
         <p className="text-muted-foreground">
-          Here's how it works
+          Here is how it works
         </p>
       </div>
 

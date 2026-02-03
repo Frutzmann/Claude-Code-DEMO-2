@@ -17,7 +17,7 @@ export default async function OnboardingLayout({
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold">YouTube Thumbnail Factory</h1>
           <p className="text-muted-foreground mt-2">
-            Let's get you set up
+            Get started with your account
           </p>
         </div>
 

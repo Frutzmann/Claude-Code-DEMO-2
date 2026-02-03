@@ -9,11 +9,10 @@ const PUBLIC_ROUTES = [
   "/auth/callback",
 ]
 
-// Will be used in Plan 04
-// const ONBOARDING_ROUTES = ["/onboarding", "/welcome"]
+const ONBOARDING_ROUTES = ["/onboarding", "/welcome"]
 
 export async function middleware(request: NextRequest) {
-  const { supabaseResponse, user } = await updateSession(request)
+  const { supabaseResponse, user, supabase } = await updateSession(request)
   const pathname = request.nextUrl.pathname
 
   // Allow public routes
@@ -36,7 +35,30 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl)
   }
 
-  // Onboarding check will be added in Plan 04
+  // Check if current route is an onboarding route
+  const isOnboardingRoute = ONBOARDING_ROUTES.some((route) =>
+    pathname.startsWith(route)
+  )
+
+  // Fetch onboarding status
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("onboarding_completed")
+    .eq("id", user.id)
+    .single()
+
+  // If profile doesn't exist or query failed, allow access (let page handle error)
+  if (profile !== null) {
+    // Redirect incomplete users to onboarding (if not already on onboarding pages)
+    if (!isOnboardingRoute && !profile.onboarding_completed) {
+      return NextResponse.redirect(new URL("/onboarding", request.url))
+    }
+
+    // Redirect completed users away from onboarding pages
+    if (isOnboardingRoute && profile.onboarding_completed) {
+      return NextResponse.redirect(new URL("/dashboard", request.url))
+    }
+  }
 
   return supabaseResponse
 }
