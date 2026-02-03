@@ -31,22 +31,22 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Generation
 
-- [ ] **GENR-01**: User can select a portrait from their library for generation
-- [ ] **GENR-02**: User can upload up to 7 background images per generation
-- [ ] **GENR-03**: User can enter keywords describing their video topic
-- [ ] **GENR-04**: System validates inputs before triggering generation
-- [ ] **GENR-05**: System displays quota check before allowing generation
-- [ ] **GENR-06**: System triggers n8n workflow with portrait URL, background URLs, and keywords
-- [ ] **GENR-07**: User sees real-time progress updates during generation (3-7 minutes)
-- [ ] **GENR-08**: User is notified when generation completes or fails
+- [x] **GENR-01**: User can select a portrait from their library for generation
+- [x] **GENR-02**: User can upload up to 7 background images per generation
+- [x] **GENR-03**: User can enter keywords describing their video topic
+- [x] **GENR-04**: System validates inputs before triggering generation
+- [x] **GENR-05**: System displays quota check before allowing generation
+- [x] **GENR-06**: System triggers n8n workflow with portrait URL, background URLs, and keywords
+- [x] **GENR-07**: User sees real-time progress updates during generation (3-7 minutes)
+- [x] **GENR-08**: User is notified when generation completes or fails
 
 ### Gallery
 
-- [ ] **GALR-01**: User can view list of all past generations with status and date
-- [ ] **GALR-02**: User can view all thumbnails from a specific generation in grid layout
-- [ ] **GALR-03**: User can download individual thumbnail images
-- [ ] **GALR-04**: User can download all thumbnails from a generation at once
-- [ ] **GALR-05**: User can see which keywords and portrait were used for each generation
+- [x] **GALR-01**: User can view list of all past generations with status and date
+- [x] **GALR-02**: User can view all thumbnails from a specific generation in grid layout
+- [x] **GALR-03**: User can download individual thumbnail images
+- [x] **GALR-04**: User can download all thumbnails from a generation at once
+- [x] **GALR-05**: User can see which keywords and portrait were used for each generation
 
 ### Billing
 
@@ -76,7 +76,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Admin
 
 - [x] **ADMN-01**: Admin user is identified by ADMIN_EMAIL environment variable
-- [ ] **ADMN-02**: Admin user has unlimited generations (no quota check)
+- [x] **ADMN-02**: Admin user has unlimited generations (no quota check)
 - [ ] **ADMN-03**: Admin user sees "Admin — Unlimited" badge instead of quota display
 - [ ] **ADMN-04**: Admin user does not see upgrade CTAs
 
@@ -153,20 +153,20 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PORT-03 | Phase 2 | Complete |
 | PORT-04 | Phase 2 | Complete |
 | PORT-05 | Phase 2 | Complete |
-| GENR-01 | Phase 3 | Pending |
-| GENR-02 | Phase 3 | Pending |
-| GENR-03 | Phase 3 | Pending |
-| GENR-04 | Phase 3 | Pending |
-| GENR-05 | Phase 3 | Pending |
-| GENR-06 | Phase 3 | Pending |
-| GENR-07 | Phase 3 | Pending |
-| GENR-08 | Phase 3 | Pending |
-| GALR-01 | Phase 3 | Pending |
-| GALR-02 | Phase 3 | Pending |
-| GALR-03 | Phase 3 | Pending |
-| GALR-04 | Phase 3 | Pending |
-| GALR-05 | Phase 3 | Pending |
-| ADMN-02 | Phase 3 | Pending |
+| GENR-01 | Phase 3 | Complete |
+| GENR-02 | Phase 3 | Complete |
+| GENR-03 | Phase 3 | Complete |
+| GENR-04 | Phase 3 | Complete |
+| GENR-05 | Phase 3 | Complete |
+| GENR-06 | Phase 3 | Complete |
+| GENR-07 | Phase 3 | Complete |
+| GENR-08 | Phase 3 | Complete |
+| GALR-01 | Phase 3 | Complete |
+| GALR-02 | Phase 3 | Complete |
+| GALR-03 | Phase 3 | Complete |
+| GALR-04 | Phase 3 | Complete |
+| GALR-05 | Phase 3 | Complete |
+| ADMN-02 | Phase 3 | Complete |
 | BILL-01 | Phase 4 | Pending |
 | BILL-02 | Phase 4 | Pending |
 | BILL-03 | Phase 4 | Pending |
