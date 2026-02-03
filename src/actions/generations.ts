@@ -6,10 +6,10 @@ import {
   createGenerationSchema,
   type CreateGenerationInput,
   MAX_BACKGROUNDS,
-  FREE_TIER_MONTHLY_QUOTA,
 } from "@/lib/validations/generations"
 import { triggerN8nWorkflow } from "@/lib/n8n/client"
 import { isAdmin } from "@/lib/admin"
+import { getPlanByPriceId, getPlanQuota, type PlanId } from "@/lib/billing/plans"
 
 /**
  * Generate signed upload URLs for background images.
@@ -90,24 +90,42 @@ export async function createGeneration(input: CreateGenerationInput) {
   // Check quota (unless admin)
   const adminUser = isAdmin(user.email)
   if (!adminUser) {
-    // Count generations this month
-    const startOfMonth = new Date()
-    startOfMonth.setDate(1)
-    startOfMonth.setHours(0, 0, 0, 0)
+    // Get active subscription to determine plan and billing period
+    const { data: subscription } = await supabase
+      .from("subscriptions")
+      .select("price_id, current_period_start, current_period_end, status")
+      .eq("user_id", user.id)
+      .in("status", ["active", "trialing"])
+      .single()
+
+    // Determine plan and quota
+    const plan = getPlanByPriceId(subscription?.price_id ?? null)
+    const quota = getPlanQuota(plan)
+
+    // Determine period start (billing period for subscribers, calendar month for free)
+    let periodStart: Date
+    if (subscription?.current_period_start) {
+      periodStart = new Date(subscription.current_period_start)
+    } else {
+      // Free tier: use calendar month
+      periodStart = new Date()
+      periodStart.setDate(1)
+      periodStart.setHours(0, 0, 0, 0)
+    }
 
     const { count, error: countError } = await supabase
       .from("generations")
       .select("*", { count: "exact", head: true })
       .eq("user_id", user.id)
-      .gte("created_at", startOfMonth.toISOString())
+      .gte("created_at", periodStart.toISOString())
 
     if (countError) {
       return { error: "Failed to check quota" }
     }
 
-    if ((count ?? 0) >= FREE_TIER_MONTHLY_QUOTA) {
+    if ((count ?? 0) >= quota) {
       return {
-        error: `Monthly limit reached (${FREE_TIER_MONTHLY_QUOTA} generations). Upgrade to continue.`,
+        error: `Monthly limit reached (${quota} generations on ${plan} plan). Upgrade to continue.`,
       }
     }
   }
@@ -151,15 +169,12 @@ export async function createGeneration(input: CreateGenerationInput) {
   }
 
   // Trigger n8n workflow
-  const callbackUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/webhooks/n8n-callback`
-
   try {
     await triggerN8nWorkflow({
       generation_id: generation.id,
       portrait_url: portrait.public_url,
       background_urls: backgroundUrls,
       keywords: keywords,
-      callback_url: callbackUrl,
     })
 
     // Update status to processing
@@ -193,7 +208,8 @@ export async function createGeneration(input: CreateGenerationInput) {
 }
 
 /**
- * Get the current user's monthly generation count and quota.
+ * Get the current user's generation quota and usage for their billing period.
+ * Uses Stripe billing period for paid users, calendar month for free tier.
  */
 export async function getGenerationQuota() {
   const supabase = await createClient()
@@ -208,16 +224,50 @@ export async function getGenerationQuota() {
 
   const adminUser = isAdmin(user.email)
 
-  // Count generations this month
-  const startOfMonth = new Date()
-  startOfMonth.setDate(1)
-  startOfMonth.setHours(0, 0, 0, 0)
+  // Admin gets unlimited access with fast-path return
+  if (adminUser) {
+    return {
+      success: true,
+      used: 0,
+      limit: Infinity,
+      isAdmin: true,
+      plan: "admin" as const,
+      periodEnd: null,
+    }
+  }
 
+  // Get active subscription to determine plan and billing period
+  const { data: subscription } = await supabase
+    .from("subscriptions")
+    .select("price_id, current_period_start, current_period_end, status")
+    .eq("user_id", user.id)
+    .in("status", ["active", "trialing"])
+    .single()
+
+  // Determine plan and quota
+  const plan = getPlanByPriceId(subscription?.price_id ?? null)
+  const quota = getPlanQuota(plan)
+
+  // Determine period (billing period for subscribers, calendar month for free)
+  let periodStart: Date
+  let periodEnd: Date | null = null
+
+  if (subscription?.current_period_start && subscription?.current_period_end) {
+    periodStart = new Date(subscription.current_period_start)
+    periodEnd = new Date(subscription.current_period_end)
+  } else {
+    // Free tier: use calendar month
+    periodStart = new Date()
+    periodStart.setDate(1)
+    periodStart.setHours(0, 0, 0, 0)
+  }
+
+  // Count generations in current period
   const { count, error } = await supabase
     .from("generations")
     .select("*", { count: "exact", head: true })
     .eq("user_id", user.id)
-    .gte("created_at", startOfMonth.toISOString())
+    .gte("created_at", periodStart.toISOString())
 
   if (error) {
     return { error: "Failed to get quota" }
@@ -226,7 +276,9 @@ export async function getGenerationQuota() {
   return {
     success: true,
     used: count ?? 0,
-    limit: adminUser ? Infinity : FREE_TIER_MONTHLY_QUOTA,
-    isAdmin: adminUser,
+    limit: quota,
+    isAdmin: false,
+    plan: plan as PlanId,
+    periodEnd: periodEnd?.toISOString() ?? null,
   }
 }

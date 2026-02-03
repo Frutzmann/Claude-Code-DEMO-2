@@ -21,6 +21,3 @@ export type CreateGenerationInput = z.infer<typeof createGenerationSchema>
 export const MAX_BACKGROUNDS = 7
 export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 export const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"]
-
-// Free tier quota - to be replaced with billing-based quota in Phase 4
-export const FREE_TIER_MONTHLY_QUOTA = 5

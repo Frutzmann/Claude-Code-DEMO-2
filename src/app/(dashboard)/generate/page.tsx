@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
-import { isAdmin } from "@/lib/admin"
-import { FREE_TIER_MONTHLY_QUOTA } from "@/lib/validations/generations"
+import { getGenerationQuota } from "@/actions/generations"
 import { GenerateClient } from "./client"
 
 export default async function GeneratePage() {
@@ -15,44 +14,33 @@ export default async function GeneratePage() {
     redirect("/login")
   }
 
-  // Fetch portraits for the selector
-  const { data: portraits, error: portraitsError } = await supabase
-    .from("portraits")
-    .select("id, public_url, label, is_active")
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false })
-
-  if (portraitsError) {
-    console.error("Error fetching portraits:", portraitsError)
-  }
-
-  // Calculate quota for this month
-  const adminUser = isAdmin(user.email)
-
-  let quota = null
-  if (!adminUser) {
-    const startOfMonth = new Date()
-    startOfMonth.setDate(1)
-    startOfMonth.setHours(0, 0, 0, 0)
-
-    const { count, error: countError } = await supabase
-      .from("generations")
-      .select("*", { count: "exact", head: true })
+  // Fetch portraits and quota in parallel
+  const [portraitsResult, quotaResult] = await Promise.all([
+    supabase
+      .from("portraits")
+      .select("id, public_url, label, is_active")
       .eq("user_id", user.id)
-      .gte("created_at", startOfMonth.toISOString())
+      .order("created_at", { ascending: false }),
+    getGenerationQuota(),
+  ])
 
-    if (!countError) {
-      quota = {
-        used: count ?? 0,
-        limit: FREE_TIER_MONTHLY_QUOTA,
-      }
-    }
+  if (portraitsResult.error) {
+    console.error("Error fetching portraits:", portraitsResult.error)
   }
+
+  // Build quota prop from server action result
+  const quota =
+    quotaResult.success && !quotaResult.isAdmin
+      ? {
+          used: quotaResult.used,
+          limit: quotaResult.limit,
+        }
+      : null
 
   return (
     <GenerateClient
-      portraits={portraits || []}
-      isAdmin={adminUser}
+      portraits={portraitsResult.data || []}
+      isAdmin={quotaResult.success ? quotaResult.isAdmin : false}
       quota={quota}
     />
   )
