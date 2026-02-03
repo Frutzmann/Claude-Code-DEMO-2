@@ -1,19 +1,30 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import type { Metadata } from "next"
+import { Navbar } from "@/components/landing/navbar"
+import { Hero } from "@/components/landing/hero"
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "YouTube Thumbnail Factory - AI-Powered Thumbnails in Seconds",
+  description:
+    "Generate professional YouTube thumbnails without design skills. Upload your portrait, add backgrounds, and let AI create scroll-stopping thumbnails.",
+  openGraph: {
+    title: "YouTube Thumbnail Factory - AI-Powered Thumbnails in Seconds",
+    description:
+      "Generate professional YouTube thumbnails without design skills. Upload your portrait, add backgrounds, and let AI create scroll-stopping thumbnails.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+}
+
+export default function LandingPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className="glass max-w-md w-full">
-        <CardHeader>
-          <CardTitle className="text-2xl text-center">YouTube Thumbnail Factory</CardTitle>
-          <CardDescription className="text-center">
-            Generate AI-powered thumbnails for your YouTube videos
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="text-center text-muted-foreground">
-          <p>Setup in progress...</p>
-        </CardContent>
-      </Card>
-    </div>
-  );
+    <main className="min-h-screen bg-background">
+      <Navbar />
+      <Hero />
+      <div id="features" className="py-24" />
+      <div id="pricing" className="py-24" />
+      <div id="testimonials" className="py-24" />
+    </main>
+  )
 }

@@ -23,12 +23,14 @@ const STRIPE_PRICES: Record<Exclude<PlanId, 'free'>, string | undefined> = {
  * Redirects user to Stripe-hosted checkout page.
  */
 export async function createCheckoutSession(planId: Exclude<PlanId, 'free'>) {
-  const priceId = STRIPE_PRICES[planId]
+  try {
+    const priceId = STRIPE_PRICES[planId]
+    console.log("[Billing] Creating checkout for plan:", planId, "priceId:", priceId)
 
-  if (!priceId) {
-    return { error: `Price not configured for ${planId} plan. Set STRIPE_PRICE_${planId.toUpperCase()} env var.` }
-  }
-  const supabase = await createClient()
+    if (!priceId) {
+      return { error: `Price not configured for ${planId} plan. Set STRIPE_PRICE_${planId.toUpperCase()} env var.` }
+    }
+    const supabase = await createClient()
 
   const {
     data: { user },
@@ -41,7 +43,7 @@ export async function createCheckoutSession(planId: Exclude<PlanId, 'free'>) {
   // Get or create Stripe customer (use service role - customers table is service-role only)
   const serviceClient = getServiceClient()
 
-  let { data: customer } = await serviceClient
+  const { data: customer } = await serviceClient
     .from("customers")
     .select("stripe_customer_id")
     .eq("id", user.id)
@@ -95,7 +97,12 @@ export async function createCheckoutSession(planId: Exclude<PlanId, 'free'>) {
     return { error: "Failed to create checkout session" }
   }
 
+  console.log("[Billing] Checkout session created:", session.url)
   return { url: session.url }
+  } catch (error) {
+    console.error("[Billing] Checkout error:", error)
+    return { error: `Checkout failed: ${error instanceof Error ? error.message : 'Unknown error'}` }
+  }
 }
 
 /**
