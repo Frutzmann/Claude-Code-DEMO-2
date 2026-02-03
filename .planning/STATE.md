@@ -64,6 +64,7 @@ Recent decisions affecting current work:
 - /api/webhooks added to PUBLIC_ROUTES for n8n callback
 - Optional HMAC verification with N8N_WEBHOOK_SECRET
 - Free tier quota set to 5 generations/month (placeholder for Phase 4)
+- Supabase Realtime useRef pattern for stable callbacks in subscriptions
 - JSZip + file-saver for batch thumbnail downloads
 - date-fns for relative time formatting in gallery
 
