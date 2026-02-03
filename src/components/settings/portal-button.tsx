@@ -29,8 +29,11 @@ export function PortalButton({ hasSubscription }: PortalButtonProps) {
     try {
       const result = await createPortalSession()
       if (result?.error) {
-        // Error handling - result only returns on error since success redirects
         console.error(result.error)
+        return
+      }
+      if (result?.url) {
+        window.location.href = result.url
       }
     } catch (error) {
       console.error("Failed to open billing portal:", error)

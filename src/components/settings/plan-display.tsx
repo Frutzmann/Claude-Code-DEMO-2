@@ -44,12 +44,16 @@ export function PlanDisplay({
     try {
       const result = await createCheckoutSession(targetPlanId)
       if (result?.error) {
-        // Error handling - result only returns on error since success redirects
         console.error(result.error)
         toast.error(result.error)
+        return
+      }
+      if (result?.url) {
+        window.location.href = result.url
       }
     } catch (error) {
       console.error("Failed to create checkout session:", error)
+      toast.error("Failed to start checkout")
     } finally {
       setLoadingPlan(null)
     }

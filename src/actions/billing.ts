@@ -3,7 +3,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { createClient as createServiceClient } from "@supabase/supabase-js"
 import { stripe } from "@/lib/stripe/server"
-import { redirect } from "next/navigation"
 import { type PlanId } from "@/lib/billing/plans"
 
 // Service role client for billing operations (customers table is service-role only)
@@ -96,7 +95,7 @@ export async function createCheckoutSession(planId: Exclude<PlanId, 'free'>) {
     return { error: "Failed to create checkout session" }
   }
 
-  redirect(session.url)
+  return { url: session.url }
 }
 
 /**
@@ -132,5 +131,5 @@ export async function createPortalSession() {
     return_url: `${process.env.NEXT_PUBLIC_APP_URL}/settings`,
   })
 
-  redirect(session.url)
+  return { url: session.url }
 }
