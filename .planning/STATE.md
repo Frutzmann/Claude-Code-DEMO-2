@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-03)
 ## Current Position
 
 Phase: 4 of 5 (Billing & Settings)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-02-03 — Completed 04-01-PLAN.md
+Last activity: 2026-02-03 — Completed 04-02-PLAN.md
 
-Progress: [███████░░░] 67%
+Progress: [████████░░] 73%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 11
+- Total plans completed: 12
 - Average duration: 3.5 min
-- Total execution time: 39 min
+- Total execution time: 42 min
 
 **By Phase:**
 
@@ -30,10 +30,10 @@ Progress: [███████░░░] 67%
 | 1 | 4 | 19 min | 4.75 min |
 | 2 | 2 | 4 min | 2 min |
 | 3 | 4 | 12 min | 3 min |
-| 4 | 1 | 4 min | 4 min |
+| 4 | 2 | 7 min | 3.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 03-01 (2m), 03-02 (3m), 03-03 (3m), 03-04 (4m), 04-01 (4m)
+- Last 5 plans: 03-02 (3m), 03-03 (3m), 03-04 (4m), 04-01 (4m), 04-02 (3m)
 - Trend: Steady
 
 *Updated after each plan completion*
@@ -71,6 +71,9 @@ Recent decisions affecting current work:
 - Billing enums (pricing_type, pricing_plan_interval, subscription_status) for type safety
 - Customers table service-role-only (no user RLS)
 - Plan quotas: free (5), pro (50), agency (200) generations/month
+- Billing period quota: paid users use Stripe billing period, free users use calendar month
+- Subscription metadata must include supabase_user_id for webhook linking
+- Service role client used for webhook handlers that bypass RLS
 
 ### Pending Todos
 
@@ -94,9 +97,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-03T14:04:00Z
-Stopped at: Completed 04-01-PLAN.md
+Last session: 2026-02-03T16:01:09Z
+Stopped at: Completed 04-02-PLAN.md
 Resume file: None
 
 ---
-*Next step: Execute 04-02-PLAN.md (Stripe webhooks)*
+*Next step: Execute 04-03-PLAN.md (Settings UI)*
