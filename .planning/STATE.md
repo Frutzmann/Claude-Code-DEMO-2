@@ -5,7 +5,7 @@
 See: .planning/PROJECT.md (updated 2026-02-03)
 
 **Core value:** Users can generate high-quality YouTube thumbnails without design skills
-**Current focus:** Phase 5 - Landing Page (IN PROGRESS)
+**Current focus:** Milestone v1.0 COMPLETE
 
 ## Current Position
 

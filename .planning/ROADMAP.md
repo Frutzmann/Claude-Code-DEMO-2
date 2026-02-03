@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Portraits** - Portrait library management
 - [x] **Phase 3: Generation & Gallery** - Core thumbnail generation and results display
 - [x] **Phase 4: Billing & Settings** - Stripe subscriptions and user settings
-- [ ] **Phase 5: Landing Page** - Marketing page for user acquisition
+- [x] **Phase 5: Landing Page** - Marketing page for user acquisition
 
 ## Phase Details
 
@@ -101,7 +101,7 @@ Plans:
 
 Plans:
 - [x] 05-01-PLAN.md — Infrastructure + Hero/Navbar (motion library, middleware update, hero section)
-- [ ] 05-02-PLAN.md — Features/Pricing/Testimonials/CTA (complete landing page sections)
+- [x] 05-02-PLAN.md — Features/Pricing/Testimonials/CTA (complete landing page sections)
 
 ## Progress
 
@@ -114,7 +114,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 2. Portraits | 2/2 | Complete | 2026-02-03 |
 | 3. Generation & Gallery | 4/4 | Complete | 2026-02-03 |
 | 4. Billing & Settings | 3/3 | Complete | 2026-02-03 |
-| 5. Landing Page | 1/2 | In progress | - |
+| 5. Landing Page | 2/2 | Complete | 2026-02-03 |
 
 ---
 *Roadmap created: 2026-02-03*

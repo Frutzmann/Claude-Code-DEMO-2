@@ -50,35 +50,35 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Billing
 
-- [ ] **BILL-01**: Free tier users get 5 generations per month
-- [ ] **BILL-02**: Pro tier users (19/month) get 50 generations per month
-- [ ] **BILL-03**: Agency tier users (49/month) get 200 generations per month
-- [ ] **BILL-04**: User can upgrade plan via Stripe Checkout
-- [ ] **BILL-05**: User can manage subscription via Stripe Customer Portal
-- [ ] **BILL-06**: User sees current plan and usage (X/Y generations this month)
-- [ ] **BILL-07**: User is blocked from generating when quota exceeded (with upgrade prompt)
-- [ ] **BILL-08**: Quota resets monthly based on Stripe billing cycle
+- [x] **BILL-01**: Free tier users get 5 generations per month
+- [x] **BILL-02**: Pro tier users (19/month) get 50 generations per month
+- [x] **BILL-03**: Agency tier users (49/month) get 200 generations per month
+- [x] **BILL-04**: User can upgrade plan via Stripe Checkout
+- [x] **BILL-05**: User can manage subscription via Stripe Customer Portal
+- [x] **BILL-06**: User sees current plan and usage (X/Y generations this month)
+- [x] **BILL-07**: User is blocked from generating when quota exceeded (with upgrade prompt)
+- [x] **BILL-08**: Quota resets monthly based on Stripe billing cycle
 
 ### Settings
 
-- [ ] **SETT-01**: User can view their profile information (name, email)
-- [ ] **SETT-02**: User can edit their display name
-- [ ] **SETT-03**: User can see their current plan and billing period
-- [ ] **SETT-04**: User can access Stripe Customer Portal from settings
+- [x] **SETT-01**: User can view their profile information (name, email)
+- [x] **SETT-02**: User can edit their display name
+- [x] **SETT-03**: User can see their current plan and billing period
+- [x] **SETT-04**: User can access Stripe Customer Portal from settings
 
 ### Landing Page
 
-- [ ] **LAND-01**: Landing page displays hero section with value proposition and CTA
-- [ ] **LAND-02**: Landing page highlights key features of the product
-- [ ] **LAND-03**: Landing page shows pricing for Free/Pro/Agency tiers
-- [ ] **LAND-04**: Landing page includes social proof section (testimonials/logos)
+- [x] **LAND-01**: Landing page displays hero section with value proposition and CTA
+- [x] **LAND-02**: Landing page highlights key features of the product
+- [x] **LAND-03**: Landing page shows pricing for Free/Pro/Agency tiers
+- [x] **LAND-04**: Landing page includes social proof section (testimonials/logos)
 
 ### Admin
 
 - [x] **ADMN-01**: Admin user is identified by ADMIN_EMAIL environment variable
 - [x] **ADMN-02**: Admin user has unlimited generations (no quota check)
-- [ ] **ADMN-03**: Admin user sees "Admin — Unlimited" badge instead of quota display
-- [ ] **ADMN-04**: Admin user does not see upgrade CTAs
+- [x] **ADMN-03**: Admin user sees "Admin — Unlimited" badge instead of quota display
+- [x] **ADMN-04**: Admin user does not see upgrade CTAs
 
 ### UI/UX
 
@@ -167,24 +167,24 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GALR-04 | Phase 3 | Complete |
 | GALR-05 | Phase 3 | Complete |
 | ADMN-02 | Phase 3 | Complete |
-| BILL-01 | Phase 4 | Pending |
-| BILL-02 | Phase 4 | Pending |
-| BILL-03 | Phase 4 | Pending |
-| BILL-04 | Phase 4 | Pending |
-| BILL-05 | Phase 4 | Pending |
-| BILL-06 | Phase 4 | Pending |
-| BILL-07 | Phase 4 | Pending |
-| BILL-08 | Phase 4 | Pending |
-| SETT-01 | Phase 4 | Pending |
-| SETT-02 | Phase 4 | Pending |
-| SETT-03 | Phase 4 | Pending |
-| SETT-04 | Phase 4 | Pending |
-| ADMN-03 | Phase 4 | Pending |
-| ADMN-04 | Phase 4 | Pending |
-| LAND-01 | Phase 5 | Pending |
-| LAND-02 | Phase 5 | Pending |
-| LAND-03 | Phase 5 | Pending |
-| LAND-04 | Phase 5 | Pending |
+| BILL-01 | Phase 4 | Complete |
+| BILL-02 | Phase 4 | Complete |
+| BILL-03 | Phase 4 | Complete |
+| BILL-04 | Phase 4 | Complete |
+| BILL-05 | Phase 4 | Complete |
+| BILL-06 | Phase 4 | Complete |
+| BILL-07 | Phase 4 | Complete |
+| BILL-08 | Phase 4 | Complete |
+| SETT-01 | Phase 4 | Complete |
+| SETT-02 | Phase 4 | Complete |
+| SETT-03 | Phase 4 | Complete |
+| SETT-04 | Phase 4 | Complete |
+| ADMN-03 | Phase 4 | Complete |
+| ADMN-04 | Phase 4 | Complete |
+| LAND-01 | Phase 5 | Complete |
+| LAND-02 | Phase 5 | Complete |
+| LAND-03 | Phase 5 | Complete |
+| LAND-04 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 46 total
