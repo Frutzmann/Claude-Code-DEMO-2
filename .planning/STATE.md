@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-03)
 ## Current Position
 
 Phase: 3 of 5 (Generation & Gallery)
-Plan: 1 of 4 in current phase
+Plan: 2 of 4 in current phase
 Status: In progress
-Last activity: 2026-02-03 - Completed 03-01-PLAN.md
+Last activity: 2026-02-03 - Completed 03-02-PLAN.md
 
-Progress: [████▓░░░░░] 46%
+Progress: [█████░░░░░] 53%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
-- Average duration: 3.57 min
-- Total execution time: 25 min
+- Total plans completed: 8
+- Average duration: 3.5 min
+- Total execution time: 28 min
 
 **By Phase:**
 
@@ -29,11 +29,11 @@ Progress: [████▓░░░░░] 46%
 |-------|-------|-------|----------|
 | 1 | 4 | 19 min | 4.75 min |
 | 2 | 2 | 4 min | 2 min |
-| 3 | 1 | 2 min | 2 min |
+| 3 | 2 | 5 min | 2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-04 (4m), 02-01 (2m), 02-02 (2m), 03-01 (2m)
-- Trend: Improving
+- Last 5 plans: 02-01 (2m), 02-02 (2m), 03-01 (2m), 03-02 (3m)
+- Trend: Steady
 
 *Updated after each plan completion*
 
@@ -61,11 +61,18 @@ Recent decisions affecting current work:
 - Generations table uses TEXT status with CHECK constraint (not enum)
 - Service role policies allow n8n callback to update generations/insert thumbnails
 - REPLICA IDENTITY FULL on generations for Realtime subscriptions
+- /api/webhooks added to PUBLIC_ROUTES for n8n callback
+- Optional HMAC verification with N8N_WEBHOOK_SECRET
+- Free tier quota set to 5 generations/month (placeholder for Phase 4)
 
 ### Pending Todos
 
 - Run 004_generations.sql in Supabase SQL Editor
 - Enable Realtime publication for generations table in Supabase Dashboard
+- Create 'backgrounds' storage bucket (public)
+- Create 'thumbnails' storage bucket (public)
+- Set N8N_WEBHOOK_URL environment variable
+- Set SUPABASE_SERVICE_ROLE_KEY environment variable
 
 ### Blockers/Concerns
 
@@ -73,9 +80,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-02-03T12:47:00Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-02-03T12:51:00Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None
 
 ---
-*Next step: Execute 03-02-PLAN.md (Generation Form & n8n Trigger)*
+*Next step: Execute 03-03-PLAN.md (Generation Form UI)*
