@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
 import Link from "next/link"
+import { isRedirectError } from "next/dist/client/components/redirect-error"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
@@ -39,7 +40,10 @@ export function LoginForm() {
       if (result?.error) {
         toast.error(result.error)
       }
-    } catch {
+    } catch (error) {
+      if (isRedirectError(error)) {
+        throw error
+      }
       toast.error("Something went wrong. Please try again.")
     } finally {
       setIsLoading(false)

@@ -29,8 +29,9 @@ export async function middleware(request: NextRequest) {
     if (pathname === "/") {
       return supabaseResponse
     }
-    // Redirect logged-in users away from auth pages (but not callback)
-    if (user && pathname !== "/auth/callback") {
+    // Redirect logged-in users away from auth pages (but not callback or reset-password)
+    // Note: reset-password needs the user to be "logged in" via Supabase's magic link
+    if (user && pathname !== "/auth/callback" && !pathname.startsWith("/reset-password")) {
       return NextResponse.redirect(new URL("/dashboard", request.url))
     }
     return supabaseResponse
