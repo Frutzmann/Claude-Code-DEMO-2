@@ -23,11 +23,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Portraits
 
-- [ ] **PORT-01**: User can upload multiple portrait images
-- [ ] **PORT-02**: User can set one portrait as "active" (pre-selected in generation form)
-- [ ] **PORT-03**: User can delete portraits (except the last one)
-- [ ] **PORT-04**: User can add labels to portraits for organization
-- [ ] **PORT-05**: User can view all their portraits in a grid layout
+- [x] **PORT-01**: User can upload multiple portrait images
+- [x] **PORT-02**: User can set one portrait as "active" (pre-selected in generation form)
+- [x] **PORT-03**: User can delete portraits (except the last one)
+- [x] **PORT-04**: User can add labels to portraits for organization
+- [x] **PORT-05**: User can view all their portraits in a grid layout
 
 ### Generation
 
@@ -148,11 +148,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UIUX-03 | Phase 1 | Complete |
 | UIUX-04 | Phase 1 | Complete |
 | UIUX-05 | Phase 1 | Complete |
-| PORT-01 | Phase 2 | Pending |
-| PORT-02 | Phase 2 | Pending |
-| PORT-03 | Phase 2 | Pending |
-| PORT-04 | Phase 2 | Pending |
-| PORT-05 | Phase 2 | Pending |
+| PORT-01 | Phase 2 | Complete |
+| PORT-02 | Phase 2 | Complete |
+| PORT-03 | Phase 2 | Complete |
+| PORT-04 | Phase 2 | Complete |
+| PORT-05 | Phase 2 | Complete |
 | GENR-01 | Phase 3 | Pending |
 | GENR-02 | Phase 3 | Pending |
 | GENR-03 | Phase 3 | Pending |

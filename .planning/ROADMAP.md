@@ -13,7 +13,7 @@ This roadmap delivers a SaaS web application that enables YouTube creators to ge
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Auth** - Secure authentication, onboarding, and UI foundation
-- [ ] **Phase 2: Portraits** - Portrait library management
+- [x] **Phase 2: Portraits** - Portrait library management
 - [ ] **Phase 3: Generation & Gallery** - Core thumbnail generation and results display
 - [ ] **Phase 4: Billing & Settings** - Stripe subscriptions and user settings
 - [ ] **Phase 5: Landing Page** - Marketing page for user acquisition
@@ -50,8 +50,8 @@ Plans:
 **Plans**: 2 plans in 2 waves
 
 Plans:
-- [ ] 02-01-PLAN.md — Database schema and server actions (portraits table, CRUD operations)
-- [ ] 02-02-PLAN.md — Portraits page UI (grid layout, upload dialog, card components)
+- [x] 02-01-PLAN.md — Database schema and server actions (portraits table, CRUD operations)
+- [x] 02-02-PLAN.md — Portraits page UI (grid layout, upload dialog, card components)
 
 ### Phase 3: Generation & Gallery
 **Goal**: Users can generate AI thumbnails and view/download results
@@ -109,7 +109,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Auth | 4/4 | Complete | 2026-02-03 |
-| 2. Portraits | 0/2 | Planning complete | - |
+| 2. Portraits | 2/2 | Complete | 2026-02-03 |
 | 3. Generation & Gallery | 0/3 | Not started | - |
 | 4. Billing & Settings | 0/3 | Not started | - |
 | 5. Landing Page | 0/1 | Not started | - |
