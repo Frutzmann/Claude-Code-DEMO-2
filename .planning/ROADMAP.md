@@ -64,12 +64,13 @@ Plans:
   4. User is notified when generation completes or fails
   5. User can view all past generations with thumbnails in gallery view
   6. User can download individual thumbnails or all at once
-**Plans**: TBD
+**Plans**: 4 plans in 3 waves
 
 Plans:
-- [ ] 03-01: Generation form and n8n workflow trigger
-- [ ] 03-02: Real-time status updates and callback webhook
-- [ ] 03-03: Gallery and download functionality
+- [ ] 03-01-PLAN.md — Database schema and dependencies (generations/thumbnails tables, jszip, shadcn components)
+- [ ] 03-02-PLAN.md — Backend infrastructure (server actions, n8n client, callback webhook)
+- [ ] 03-03-PLAN.md — Generation UI (form, portrait selector, background upload, realtime status)
+- [ ] 03-04-PLAN.md — Gallery and downloads (list page, detail page, thumbnail grid, ZIP download)
 
 ### Phase 4: Billing & Settings
 **Goal**: Users can subscribe to paid plans and manage their account settings
@@ -110,7 +111,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 |-------|----------------|--------|-----------|
 | 1. Foundation & Auth | 4/4 | Complete | 2026-02-03 |
 | 2. Portraits | 2/2 | Complete | 2026-02-03 |
-| 3. Generation & Gallery | 0/3 | Not started | - |
+| 3. Generation & Gallery | 0/4 | Not started | - |
 | 4. Billing & Settings | 0/3 | Not started | - |
 | 5. Landing Page | 0/1 | Not started | - |
 
