@@ -1,9 +1,17 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server"
+import { createClient as createServiceClient } from "@supabase/supabase-js"
 import { stripe } from "@/lib/stripe/server"
 import { redirect } from "next/navigation"
 import { type PlanId } from "@/lib/billing/plans"
+
+// Service role client for billing operations (customers table is service-role only)
+const getServiceClient = () =>
+  createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
 
 // Server-side price ID lookup (env vars not available on client)
 const STRIPE_PRICES: Record<Exclude<PlanId, 'free'>, string | undefined> = {
@@ -31,8 +39,10 @@ export async function createCheckoutSession(planId: Exclude<PlanId, 'free'>) {
     return { error: "Not authenticated" }
   }
 
-  // Get or create Stripe customer
-  let { data: customer } = await supabase
+  // Get or create Stripe customer (use service role - customers table is service-role only)
+  const serviceClient = getServiceClient()
+
+  let { data: customer } = await serviceClient
     .from("customers")
     .select("stripe_customer_id")
     .eq("id", user.id)
@@ -51,7 +61,7 @@ export async function createCheckoutSession(planId: Exclude<PlanId, 'free'>) {
     stripeCustomerId = stripeCustomer.id
 
     // Store customer ID in database
-    const { error: upsertError } = await supabase.from("customers").upsert({
+    const { error: upsertError } = await serviceClient.from("customers").upsert({
       id: user.id,
       stripe_customer_id: stripeCustomerId,
     })
@@ -104,8 +114,9 @@ export async function createPortalSession() {
     return { error: "Not authenticated" }
   }
 
-  // Get Stripe customer ID
-  const { data: customer } = await supabase
+  // Get Stripe customer ID (use service role - customers table is service-role only)
+  const serviceClient = getServiceClient()
+  const { data: customer } = await serviceClient
     .from("customers")
     .select("stripe_customer_id")
     .eq("id", user.id)
