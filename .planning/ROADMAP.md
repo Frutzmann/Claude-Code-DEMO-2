@@ -82,12 +82,12 @@ Plans:
   3. User is blocked from generating when quota exceeded with upgrade prompt
   4. User can manage subscription via Stripe Customer Portal
   5. Admin user sees unlimited badge and bypasses quota checks
-**Plans**: TBD
+**Plans**: 3 plans in 3 waves
 
 Plans:
-- [ ] 04-01: Stripe products and checkout integration
-- [ ] 04-02: Webhook handling and quota enforcement
-- [ ] 04-03: Settings page and customer portal
+- [ ] 04-01-PLAN.md — Billing infrastructure (Stripe SDK, database schema, plan configuration)
+- [ ] 04-02-PLAN.md — Webhook and quota enforcement (Stripe webhook, checkout/portal actions, billing period quota)
+- [ ] 04-03-PLAN.md — Settings page UI (profile form, plan display, subscription management)
 
 ### Phase 5: Landing Page
 **Goal**: Public landing page converts visitors into signups
@@ -112,7 +112,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 1. Foundation & Auth | 4/4 | Complete | 2026-02-03 |
 | 2. Portraits | 2/2 | Complete | 2026-02-03 |
 | 3. Generation & Gallery | 4/4 | Complete | 2026-02-03 |
-| 4. Billing & Settings | 0/3 | Not started | - |
+| 4. Billing & Settings | 0/3 | Planned | - |
 | 5. Landing Page | 0/1 | Not started | - |
 
 ---
