@@ -4,7 +4,6 @@ import { useState, useCallback, useRef } from "react"
 import Image from "next/image"
 import { Upload, X, Plus, ImageIcon } from "lucide-react"
 import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
 import {
   MAX_BACKGROUNDS,
   MAX_FILE_SIZE,
