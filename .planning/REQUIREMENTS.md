@@ -51,8 +51,8 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Billing
 
 - [ ] **BILL-01**: Free tier users get 5 generations per month
-- [ ] **BILL-02**: Pro tier users (€19/month) get 50 generations per month
-- [ ] **BILL-03**: Agency tier users (€49/month) get 200 generations per month
+- [ ] **BILL-02**: Pro tier users (19/month) get 50 generations per month
+- [ ] **BILL-03**: Agency tier users (49/month) get 200 generations per month
 - [ ] **BILL-04**: User can upgrade plan via Stripe Checkout
 - [ ] **BILL-05**: User can manage subscription via Stripe Customer Portal
 - [ ] **BILL-06**: User sees current plan and usage (X/Y generations this month)
@@ -142,6 +142,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ONBD-01 | Phase 1 | Pending |
 | ONBD-02 | Phase 1 | Pending |
 | ONBD-03 | Phase 1 | Pending |
+| ADMN-01 | Phase 1 | Pending |
+| UIUX-01 | Phase 1 | Pending |
+| UIUX-02 | Phase 1 | Pending |
+| UIUX-03 | Phase 1 | Pending |
+| UIUX-04 | Phase 1 | Pending |
+| UIUX-05 | Phase 1 | Pending |
 | PORT-01 | Phase 2 | Pending |
 | PORT-02 | Phase 2 | Pending |
 | PORT-03 | Phase 2 | Pending |
@@ -160,6 +166,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GALR-03 | Phase 3 | Pending |
 | GALR-04 | Phase 3 | Pending |
 | GALR-05 | Phase 3 | Pending |
+| ADMN-02 | Phase 3 | Pending |
 | BILL-01 | Phase 4 | Pending |
 | BILL-02 | Phase 4 | Pending |
 | BILL-03 | Phase 4 | Pending |
@@ -172,19 +179,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SETT-02 | Phase 4 | Pending |
 | SETT-03 | Phase 4 | Pending |
 | SETT-04 | Phase 4 | Pending |
+| ADMN-03 | Phase 4 | Pending |
+| ADMN-04 | Phase 4 | Pending |
 | LAND-01 | Phase 5 | Pending |
 | LAND-02 | Phase 5 | Pending |
 | LAND-03 | Phase 5 | Pending |
 | LAND-04 | Phase 5 | Pending |
-| ADMN-01 | Phase 1 | Pending |
-| ADMN-02 | Phase 3 | Pending |
-| ADMN-03 | Phase 4 | Pending |
-| ADMN-04 | Phase 4 | Pending |
-| UIUX-01 | Phase 1 | Pending |
-| UIUX-02 | Phase 1 | Pending |
-| UIUX-03 | Phase 1 | Pending |
-| UIUX-04 | Phase 1 | Pending |
-| UIUX-05 | Phase 1 | Pending |
 
 **Coverage:**
 - v1 requirements: 46 total
@@ -193,4 +193,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-02-03*
-*Last updated: 2026-02-03 after initial definition*
+*Last updated: 2026-02-03 after roadmap creation*
