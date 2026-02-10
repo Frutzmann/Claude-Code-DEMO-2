@@ -59,8 +59,10 @@ export function GalleryList({ generations }: GalleryListProps) {
                     : gen.keywords}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  {gen.thumbnail_count} thumbnails from {gen.background_count}{" "}
-                  background{gen.background_count !== 1 ? "s" : ""}
+                  {gen.thumbnail_count} thumbnail{gen.thumbnail_count !== 1 ? "s" : ""}
+                  {gen.background_count > 0
+                    ? ` from ${gen.background_count} background${gen.background_count !== 1 ? "s" : ""}`
+                    : " from keywords only"}
                 </p>
                 <p className="text-xs text-muted-foreground">
                   {formatDistanceToNow(new Date(gen.created_at), {

@@ -218,7 +218,7 @@ export function BackgroundUpload({
               <p className="text-sm font-medium">
                 {dragActive
                   ? "Drop your images here"
-                  : "Drag and drop background images"}
+                  : "Drag and drop background images (optional)"}
               </p>
               <p className="text-xs text-muted-foreground">or click to browse</p>
             </div>
@@ -245,7 +245,9 @@ export function BackgroundUpload({
 
       {/* File count indicator */}
       <p className="text-xs text-muted-foreground text-center">
-        {files.length} / {MAX_BACKGROUNDS} backgrounds selected
+        {files.length === 0
+          ? "No backgrounds — AI will generate based on keywords only"
+          : `${files.length} / ${MAX_BACKGROUNDS} backgrounds selected`}
       </p>
     </div>
   )

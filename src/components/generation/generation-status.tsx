@@ -133,7 +133,7 @@ export function GenerationStatus({
           </div>
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Background images</span>
-            <span className="font-medium">{generation.background_count}</span>
+            <span className="font-medium">{generation.background_count || "None"}</span>
           </div>
           {generation.thumbnail_count !== null && generation.thumbnail_count > 0 && (
             <div className="flex items-center justify-between text-sm">

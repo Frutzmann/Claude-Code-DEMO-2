@@ -85,7 +85,7 @@ export function GenerateClient({
           <h3 className="font-medium text-foreground">How it works:</h3>
           <ol className="list-decimal list-inside space-y-1">
             <li>Select your portrait (or the active one will be used)</li>
-            <li>Upload up to 7 background images</li>
+            <li>Optionally upload up to 7 background images</li>
             <li>Enter keywords that describe your video topic</li>
             <li>Click Generate and wait 3-7 minutes for AI magic</li>
             <li>Download your thumbnails from the gallery</li>

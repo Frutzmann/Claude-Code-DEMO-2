@@ -31,8 +31,12 @@ export async function createBackgroundUploadUrls(count: number) {
     return { error: "Not authenticated" }
   }
 
-  if (count < 1 || count > MAX_BACKGROUNDS) {
-    return { error: `Must request between 1 and ${MAX_BACKGROUNDS} upload URLs` }
+  if (count < 0 || count > MAX_BACKGROUNDS) {
+    return { error: `Must request between 0 and ${MAX_BACKGROUNDS} upload URLs` }
+  }
+
+  if (count === 0) {
+    return { success: true, urls: [] }
   }
 
   const urls: Array<{ path: string; signedUrl: string }> = []

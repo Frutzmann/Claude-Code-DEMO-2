@@ -50,7 +50,6 @@ export function GenerationForm({
     !isPending &&
     !quotaExceeded &&
     !hasNoPortraits &&
-    backgroundFiles.length > 0 &&
     keywords.trim().length >= 3 &&
     portraitId
 
@@ -60,35 +59,39 @@ export function GenerationForm({
     if (!canSubmit) return
 
     startTransition(async () => {
-      // Step 1: Get signed upload URLs
-      const urlsResult = await createBackgroundUploadUrls(backgroundFiles.length)
-
-      if (urlsResult.error || !urlsResult.urls) {
-        toast.error(urlsResult.error || "Failed to prepare upload")
-        return
-      }
-
-      // Step 2: Upload files to signed URLs
       try {
-        const uploadPromises = backgroundFiles.map(async (file, index) => {
-          const { signedUrl, path } = urlsResult.urls![index]
+        let uploadedPaths: string[] = []
 
-          const response = await fetch(signedUrl, {
-            method: "PUT",
-            headers: {
-              "Content-Type": file.type,
-            },
-            body: file,
-          })
+        if (backgroundFiles.length > 0) {
+          // Step 1: Get signed upload URLs
+          const urlsResult = await createBackgroundUploadUrls(backgroundFiles.length)
 
-          if (!response.ok) {
-            throw new Error(`Failed to upload ${file.name}`)
+          if (urlsResult.error || !urlsResult.urls) {
+            toast.error(urlsResult.error || "Failed to prepare upload")
+            return
           }
 
-          return path
-        })
+          // Step 2: Upload files to signed URLs
+          const uploadPromises = backgroundFiles.map(async (file, index) => {
+            const { signedUrl, path } = urlsResult.urls![index]
 
-        const uploadedPaths = await Promise.all(uploadPromises)
+            const response = await fetch(signedUrl, {
+              method: "PUT",
+              headers: {
+                "Content-Type": file.type,
+              },
+              body: file,
+            })
+
+            if (!response.ok) {
+              throw new Error(`Failed to upload ${file.name}`)
+            }
+
+            return path
+          })
+
+          uploadedPaths = await Promise.all(uploadPromises)
+        }
 
         // Step 3: Create generation
         const result = await createGeneration({
@@ -169,7 +172,7 @@ export function GenerationForm({
 
           {/* Background upload */}
           <div className="space-y-2">
-            <Label>Background Images</Label>
+            <Label>Background Images <span className="text-muted-foreground font-normal">(optional)</span></Label>
             <BackgroundUpload
               files={backgroundFiles}
               onFilesChange={setBackgroundFiles}

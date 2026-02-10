@@ -161,9 +161,10 @@ export function GenerationDetailClient({
               </p>
               <p className="text-sm">
                 {generation.thumbnail_count} thumbnail
-                {generation.thumbnail_count !== 1 ? "s" : ""} from{" "}
-                {generation.background_count} background
-                {generation.background_count !== 1 ? "s" : ""}
+                {generation.thumbnail_count !== 1 ? "s" : ""}
+                {generation.background_count > 0
+                  ? ` from ${generation.background_count} background${generation.background_count !== 1 ? "s" : ""}`
+                  : " from keywords only"}
               </p>
             </div>
 

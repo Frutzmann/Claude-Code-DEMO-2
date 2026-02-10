@@ -11,7 +11,6 @@ export const createGenerationSchema = z.object({
     .max(500, "Keywords too long"),
   backgroundPaths: z
     .array(z.string().min(1, "Invalid background path"))
-    .min(1, "At least one background image required")
     .max(7, "Maximum 7 background images allowed"),
 })
 
